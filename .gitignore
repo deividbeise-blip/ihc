@@ -1,0 +1,6 @@
+# Configurações locais do WebStorm/IntelliJ
+.idea/
+
+# Dependências e logs
+node_modules/
+npm-debug.log*
