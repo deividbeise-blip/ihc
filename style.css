@@ -82,7 +82,8 @@ button { font: inherit; cursor: pointer; }
 .nav-search.open { border-color: #000; }
 
 /* Pesquisa avançada: abas superiores viram filtros de categoria (ficam acima do fundo do modal) */
-body.busca-avancada .main-nav { position: sticky; top: 0; z-index: 51; box-shadow: 0 2px 0 #000; }
+/* Com o modal aberto, a barra verde fica acima do fundo do modal para a lupa poder pesquisar */
+body.busca-aberta .main-nav { position: sticky; top: 0; z-index: 51; box-shadow: 0 2px 0 #000; }
 body.busca-avancada .main-nav__list a { cursor: pointer; border: 2px dashed rgba(255,255,255,.55); }
 body.busca-avancada .main-nav__list a:hover { border-color: #fff; }
 body.busca-avancada .main-nav__list a.filtro-on {

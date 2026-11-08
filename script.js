@@ -995,6 +995,7 @@ function iniciar() {
   const results = $("#search-results");
   const body = $("#search-body");
   const nav = $(".main-nav");
+  const btnBusca = $("#btn-busca");
   // Pesquisa avançada: as abas do menu superior viram filtros de categoria
   const abas = [...document.querySelectorAll(".main-nav__list a[data-tab]")];
   const filtros = new Set(); // data-tab das abas selecionadas
@@ -1045,7 +1046,7 @@ function iniciar() {
   // (relevante em telas estreitas, onde o menu quebra em várias linhas)
   function posicionarModal() {
     modal.style.paddingTop = "";
-    if (!avancadaAtiva()) return;
+    if (modal.hidden) return;
     const base = parseFloat(getComputedStyle(modal).paddingTop) || 0;
     const fundoNav = nav.getBoundingClientRect().bottom + 12;
     if (fundoNav > base) modal.style.paddingTop = fundoNav + "px";
@@ -1055,6 +1056,10 @@ function iniciar() {
     ultimoFoco = document.activeElement;
     modal.hidden = false;
     navSearch.classList.add("open");
+    document.body.classList.add("busca-aberta");
+    // com o modal aberto, a lupa passa a executar a pesquisa (padrão ou avançada)
+    btnBusca.setAttribute("aria-label", "Pesquisar");
+    btnBusca.title = "Pesquisar";
     results.innerHTML = "";
     body.classList.remove("has-results");
     hint.textContent = HINT_AVANCADA;
@@ -1066,6 +1071,9 @@ function iniciar() {
   function fecharBusca(devolverFoco = true) {
     modal.hidden = true;
     navSearch.classList.remove("open");
+    document.body.classList.remove("busca-aberta");
+    btnBusca.setAttribute("aria-label", "Abrir pesquisa");
+    btnBusca.title = "Abrir pesquisa";
     modoAvancado(false);
     if (devolverFoco && ultimoFoco) ultimoFoco.focus();
   }
@@ -1100,7 +1108,9 @@ function iniciar() {
       : `<li class="none">Nenhum resultado${para}${esc(emCategorias)}. ${usarFiltros ? "Tente remover algum filtro ou usar outra palavra." : "Tente outra palavra, como “biblioteca”, “laboratório” ou o nome de um docente."}</li>`;
   }
 
-  $("#btn-busca").addEventListener("click", () => (modal.hidden ? abrirBusca() : fecharBusca()));
+  // Lupa: abre o modal; com ele aberto, pesquisa (mesma ação do botão "Buscar").
+  // Para fechar: X, Esc ou clique fora do modal.
+  btnBusca.addEventListener("click", () => (modal.hidden ? abrirBusca() : buscar()));
   $("#search-close").addEventListener("click", () => fecharBusca());
   $("#search-go").addEventListener("click", buscar);
   input.addEventListener("keydown", (e) => { if (e.key === "Enter") buscar(); });
@@ -1114,7 +1124,10 @@ function iniciar() {
   // No modo avançado, clicar numa aba alterna o filtro em vez de navegar
   abas.forEach((a) => {
     a.addEventListener("click", (e) => {
-      if (!avancadaAtiva()) return;
+      if (modal.hidden) return;
+      // pesquisa padrão: a barra fica acima do fundo do modal, então clicar numa aba
+      // equivale a sair da pesquisa e navegar normalmente
+      if (!avancadaAtiva()) { fecharBusca(false); return; }
       e.preventDefault();
       alternarFiltro(a.dataset.tab);
     });
@@ -1126,7 +1139,7 @@ function iniciar() {
     });
   });
   window.addEventListener("resize", posicionarModal);
-  window.addEventListener("scroll", () => { if (avancadaAtiva()) posicionarModal(); }, { passive: true });
+  window.addEventListener("scroll", () => { if (!modal.hidden) posicionarModal(); }, { passive: true });
   modal.addEventListener("click", (e) => {
     if (e.target === modal) fecharBusca();
     if (e.target.closest("[data-close]")) fecharBusca(false);
@@ -1135,8 +1148,8 @@ function iniciar() {
     if (modal.hidden) return;
     if (e.key === "Escape") { fecharBusca(); return; }
     if (e.key !== "Tab") return;
-    // focus trap: Tab/Shift+Tab circulam só dentro do modal (e nas abas superiores, na pesquisa avançada)
-    const focaveis = [...(avancadaAtiva() ? abas : []),
+    // focus trap: Tab/Shift+Tab circulam só dentro do modal, na lupa e (na pesquisa avançada) nas abas superiores
+    const focaveis = [...(avancadaAtiva() ? abas : []), btnBusca,
       ...modal.querySelectorAll('button, input, a[href], [tabindex]:not([tabindex="-1"])')]
       .filter((el) => !el.disabled && !el.closest("[hidden]"));
     if (!focaveis.length) return;

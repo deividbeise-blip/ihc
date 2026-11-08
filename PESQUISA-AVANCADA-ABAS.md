@@ -106,3 +106,38 @@ Com a pesquisa avançada desligada (ou o modal fechado), as abas funcionam como 
 
 ### Documentação
 15. `CORRECOES-VERSAO2.md` (item 5 da seção 3.2) e `CORRECOES.md` ainda descrevem o **campo superior** no *focus trap* da pesquisa avançada. Esse campo não existe mais. Esses relatórios são históricos e não foram editados.
+
+---
+
+## 6. Correção posterior: a lupa da barra superior não pesquisava
+
+### Diagnóstico
+O botão de lupa (`#btn-busca`) **nunca executava a pesquisa**:
+
+- **Pesquisa padrão:** a barra verde ficava **atrás** do fundo do modal (`z-index: 50`). O clique na lupa caía no `.modal-backdrop`, cujo handler (`e.target === modal`) **fechava** o modal.
+- **Pesquisa avançada:** a barra já ficava acima do fundo, mas o handler da lupa era `modal.hidden ? abrirBusca() : fecharBusca()`. Com o modal aberto, ela também **só fechava**.
+
+Só o botão "Buscar" do rodapé do modal e o Enter no campo executavam `buscar()`.
+
+### Correção
+| Arquivo | Mudança |
+|---|---|
+| `script.js` | Handler da lupa: `modal.hidden ? abrirBusca() : buscar()`. Com o modal aberto ela faz o mesmo que "Buscar" e respeita o modo (padrão ou avançado com filtros). |
+| `script.js` | `abrirBusca()`/`fecharBusca()` ligam/desligam a classe `busca-aberta` no `<body>` e trocam o `aria-label`/`title` da lupa entre "Abrir pesquisa" e "Pesquisar". |
+| `style.css` | A regra que deixa a barra verde `sticky` e acima do fundo do modal passou de `body.busca-avancada` para `body.busca-aberta`. Ela vale com o modal aberto **em qualquer modo**, então a lupa é sempre clicável. Os estilos de filtro das abas continuam só no modo avançado. |
+| `script.js` | `posicionarModal()` (evita que a barra cubra o topo do modal) passou a valer sempre que o modal está aberto, não só na pesquisa avançada. |
+| `script.js` | Como na pesquisa **padrão** as abas agora também ficam clicáveis por cima do fundo, clicar numa delas **fecha o modal e navega**. É o mesmo efeito de clicar fora, só que já levando à página. |
+| `script.js` | *Focus trap*: a lupa entra no ciclo de `Tab` (antes das abas no modo avançado). |
+
+### Testes (jsdom)
+- A lupa abre o modal. Com ele aberto, o rótulo vira "Pesquisar".
+- Pesquisa padrão: termo "biblioteca" + lupa → modal continua aberto, 13 resultados.
+- Pesquisa avançada: filtro "Bibliotecas" + "uruguaiana" + lupa → "Bibliotecas" e "Biblioteca Uruguaiana".
+- Pesquisa avançada só com filtro (sem termo) + lupa → 12 páginas de Bibliotecas.
+- Esc fecha, remove `busca-aberta` e o rótulo volta a "Abrir pesquisa".
+- Modo padrão: clicar numa aba com o modal aberto fecha o modal e navega.
+
+### Observações / fora do escopo
+16. **A lupa não fecha mais o modal.** Para fechar: **X**, **Esc** ou clique fora. Se alguém estiver acostumado a fechar pela lupa, vai estranhar. Uma alternativa seria um botão "fechar" ao lado da lupa enquanto o modal estiver aberto.
+17. **Com o modal aberto, a barra verde agora fica fixa no topo também na pesquisa padrão** (com a sombra preta). É uma mudança visual pequena em relação ao comportamento anterior.
+18. **Clicar na lupa com o campo vazio** (e sem filtros) mostra a dica "Digite o que você procura…" em vez de um aviso mais visível. É o mesmo comportamento do botão "Buscar".
