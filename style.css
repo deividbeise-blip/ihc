@@ -507,3 +507,59 @@ body.contraste .submenu { background: #111; }
 body.contraste .texto h3, body.contraste .mapa h3 { color: #ffeb3b; }
 body.contraste .tabela-simples td, body.contraste .pessoas li, body.contraste .boas-vindas-home, body.contraste .docs a { background: #000 !important; color: #fff; border-color: #fff; }
 body.contraste .post-card h3 a { color: #ffeb3b; }
+
+/* =====================================================
+   Menu do SisBi com submenus (aba Bibliotecas)
+   ===================================================== */
+.sisbi-bar { position: relative; z-index: 20; align-items: center; }
+.sb-item { position: relative; display: flex; align-items: center; }
+.sisbi-bar .sb-link { padding: 3px 0; }
+.sisbi-bar .sb-link:hover, .sisbi-bar .sb-link:focus-visible { text-decoration: underline; }
+.sb-toggle {
+  background: none; border: 0; color: #fff; font-size: 8px; padding: 3px 2px; line-height: 1;
+}
+.sb-toggle:hover { background: var(--verde-escuro); }
+.sb-dd {
+  display: none; position: absolute; top: 100%; left: 0; min-width: 230px; max-height: 70vh; overflow-y: auto;
+  list-style: none; margin: 6px 0 0; padding: 6px 0; background: #f8f8f8; border: 1px solid #ddd;
+  box-shadow: 0 6px 18px rgba(0,0,0,.18); text-align: left;
+}
+.sb-item:hover .sb-dd, .sb-item.open .sb-dd { display: block; }
+.sb-item:last-child .sb-dd, .sb-item:nth-last-child(2) .sb-dd { left: auto; right: 0; }
+.sb-dd::before { content: ""; position: absolute; top: -8px; left: 0; right: 0; height: 8px; } /* ponte para o hover */
+.sisbi-bar .sb-dd a, .sb-grupo-rotulo {
+  display: block; color: #222; font-size: 11px; line-height: 1.35; padding: 6px 14px; text-decoration: none;
+}
+.sisbi-bar .sb-dd a:hover, .sisbi-bar .sb-dd a:focus-visible { background: #e3f3e8; color: var(--verde-escuro); }
+.sb-grupo-rotulo { font-weight: 700; color: #444; }
+.sb-tem-sub > a { font-weight: 700; }
+.sb-sub { list-style: none; margin: 0 0 4px; padding: 0 0 0 10px; border-left: 2px solid #cfe3d5; margin-left: 14px; }
+.sisbi-bar .sb-sub a { font-size: 10.5px; padding: 4px 10px; }
+.sb-ext { font-size: .85em; opacity: .7; }
+
+/* Páginas do SisBi */
+.sb-intro { font-family: var(--fonte-site); font-size: 12px; color: #444; margin: -8px 0 16px; }
+.sb-btns { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.big-btn.sb-btn { min-height: 46px; padding: 6px 10px; font-size: 12.5px; display: flex; align-items: center; justify-content: center; gap: 4px; }
+.sb-secao h3 { font-family: var(--fonte); font-weight: 600; font-size: 15px; margin: 6px 0 10px; color: var(--verde-tabela); }
+.sb-secao h3 a { color: inherit; text-decoration: none; }
+.sb-secao h3 a:hover { text-decoration: underline; }
+.sb-ano { font-family: var(--fonte); font-size: 30px; margin: 4px 0 12px; }
+.sb-editais { list-style: none; margin: 0 0 20px; padding: 0; font-family: var(--fonte-site); font-size: 13px; line-height: 1.55; }
+.sb-editais li { margin-bottom: 12px; }
+.sb-editais a { text-decoration: none; }
+.sb-editais a:hover { text-decoration: underline; }
+.sb-nota { font-family: var(--fonte-site); font-size: 10.5px; color: #666; border-top: 1px solid #e2e2e2; padding-top: 8px; margin-top: 10px; }
+
+body.contraste .sb-dd { background: #000; border-color: #fff; }
+body.contraste .sisbi-bar .sb-dd a, body.contraste .sb-grupo-rotulo { color: #ffeb3b; }
+body.contraste .sb-intro, body.contraste .sb-nota { color: #fff; }
+
+@media (max-width: 640px) {
+  .sisbi-bar { flex-direction: column; align-items: stretch; gap: 0; }
+  .sb-item { flex-wrap: wrap; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,.2); }
+  .sisbi-bar .sb-link { font-size: 11px; padding: 6px 0; }
+  .sb-toggle { font-size: 12px; padding: 6px 10px; }
+  .sb-item:hover .sb-dd { display: none; }
+  .sb-item.open .sb-dd { display: block; position: static; width: 100%; margin: 0 0 6px; max-height: none; box-shadow: none; }
+}

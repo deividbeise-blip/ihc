@@ -289,16 +289,119 @@ function iniciar() {
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const back = (hash, label) => `<a class="back-link" href="#${hash}">← Voltar para ${label}</a>`;
 
+  // ---------------- Menu do SisBi (barra verde da aba Bibliotecas) ----------------
+  // Itens e links conforme o menu de https://sites.unipampa.edu.br/sisbi/
+  // url    = abre no site oficial (nova aba)
+  // interno = página deste protótipo (#hash)
+  const SB = "https://sites.unipampa.edu.br/sisbi/";
+  const SISBI_MENU = [
+    { id: "consulta", nome: "Consulta ao acervo | Renovações e Reservas", desc: "Consulte o acervo das bibliotecas, faça reservas e renove seus empréstimos no Pergamum.", itens: [
+      { n: "Consulta ao acervo e Reservas", url: "https://unipampa.pergamum.com.br/" },
+      { n: "Renovações", url: "https://unipampa.pergamum.com.br/login" },
+    ]},
+    { id: "pesquisa", nome: "Pesquisa", oficial: SB + "pesquisa/", desc: "Bases de dados, e-books e ferramentas de apoio à pesquisa acadêmica.", itens: [
+      { n: "Bases de dados", sub: [
+        { n: "Repositório Institucional", url: SB + "repositorio-digital/" },
+        { n: "Publica-se", url: SB + "publica-se/" },
+        { n: "Periódicos Capes", url: SB + "periodicos-capes/" },
+        { n: "Portal Saúde Baseada em Evidências", url: SB + "portal-saude-baseada-em-evidencias/" },
+        { n: "UpToDate – Informações de saúde", url: SB + "uptodate-informacoes-de-saude/" },
+        { n: "E-books Springer", url: SB + "e-books-springer/" },
+        { n: "E-books Minha Biblioteca", url: SB + "e-books-minha-biblioteca/" },
+        { n: "Target GEDWeb", url: SB + "target-gedweb/" },
+        { n: "Bases de Dados e Ebooks de Livre Acesso", url: SB + "bases-de-dados-de-livre-acesso/" },
+      ]},
+      { n: "Tesauros", url: SB + "tesauros/" },
+      { n: "Gerenciadores de referências", url: SB + "gerenciadores-de-referencias-2/" },
+      { n: "Identificadores de autores", url: SB + "identificadores-de-autores/" },
+    ]},
+    { id: "servicos", nome: "Serviços", desc: "Projetos culturais, guias e serviços oferecidos pelas bibliotecas da Unipampa.", itens: [
+      { n: "Agenda: Ações culturais e educativas", url: SB + "agenda/" },
+      { n: "Biblio E-Zine", url: SB + "biblio-e-zine/", sub: [
+        { n: "Edição Histórica – inaugural", url: SB + "edicao-historica-inaugural/" },
+      ]},
+      { n: "Clube do Livro da Unipampa", url: SB + "clube-do-livro-da-unipampa-2/", sub: [
+        { n: "Clube do Livro Unipampa 2026", url: SB + "clube-do-livro-unipampa-2026/" },
+        { n: "Rodas de Leitura Contos", url: SB + "rodas-de-leitura-contos/" },
+        { n: "Clube do Livro da Unipampa 2025", url: SB + "clube-do-livro-da-unipampa-2025/" },
+        { n: "Conheça os Mediadores de 2025", url: SB + "conheca-mais-sobre-os-mediadores-do-clube-de-2025/" },
+        { n: "Clube do Livro da Unipampa 2024", url: SB + "clube-do-livro-da-unipampa/" },
+      ]},
+      { n: "Biblioteca de Cria-ções", url: SB + "biblioteca-de-cria-coes/", sub: [
+        { n: "Sobre o Projeto", url: SB + "biblioteca-de-cria-acoes/" },
+        { n: "Agenda – Biblioteca de Cria-ações", url: SB + "agenda/" },
+        { n: "Banco de talentos", url: SB + "quero-participar/" },
+        { n: "Área do bibliotecário", url: SB + "area-do-bibliotecario/" },
+      ]},
+      { n: "Ludoteca Itinerante", url: SB + "ludoteca-itinerante/", sub: [
+        { n: "Jogos da Ludoteca Itinerante", url: SB + "jogos-da-ludoteca-itinerante/" },
+        { n: "Retirar Jogos", url: SB + "retirar-jogos/" },
+      ]},
+      { n: "Cinemateca Móvel SisBi", url: SB + "cinemateca-movel-sisbi/", sub: [
+        { n: "Sessões do Cinemateca", url: SB + "sessoes-do-cinemateca/" },
+      ]},
+      { n: "Projeto EXPEDIÇÃO 360°", url: SB + "projeto-expedicao-360/" },
+      { n: "Guia Visual de Trabalhos Acadêmicos", url: SB + "guia-visual-de-trabalhos-academicos/" },
+      { n: "Guia do Usuário", url: SB + "files/2023/10/guia-do-usuario-sisbi-atualizado-em-06-10-2023.pdf" },
+      { n: "Serviços oferecidos", url: SB + "servicos/" },
+      { n: "Instruções para Normalização de Trabalhos Acadêmicos", url: SB + "normalizacao/" },
+      { n: "Empréstimo Entre Bibliotecas", url: SB + "emprestimo-entre-bibliotecas/" },
+      { n: "Manuais Configuração de Proxy", url: SB + "manuais-configuracao-de-proxy/" },
+      { n: "ISBN / ISSN", url: SB + "isbn-issn/" },
+      { n: "WIKIPAMPA", url: SB + "wikipampa/" },
+    ]},
+    { id: "editais", nome: "Editais", oficial: SB + "editais/", semMenu: true, anos: [
+      { ano: "2023", itens: [
+        { n: "Edital nº 279/2023 Edital de seleção de candidatos às bolsas para o atendimento das demandas do Portal Publica-se.", url: SB + "edital-no-279-2023-edital-de-selecao-de-candidatos-as-bolsas-para-atendimento-das-demandas-do-portal-publica-se/" },
+        { n: "Edital nº 03, de 29 de junho de 2023 Eleição para representantes para o Conselho Coordenador de Bibliotecas da Universidade Federal do Pampa", url: SB + "edital-no-03-de-29-de-junho-de-2023-eleicao-para-representantes-para-o-conselho-coordenador-de-bibliotecas-da-universidade-federal-do-pampa/" },
+      ]},
+    ]},
+    { id: "regimentos", nome: "Regimentos e normas", desc: "Regras de empréstimo, regimento e políticas do Sistema de Bibliotecas.", itens: [
+      { n: "Normas de circulação do acervo", url: SB + "normas-de-circulacao-do-acervo/" },
+      { n: "Regimento geral", url: SB + "regimento-geral/" },
+      { n: "Planos de contingência", url: SB + "planos-de-contingencia/" },
+      { n: "Política de Desenvolvimento de Coleções – PDC", url: SB + "politica-de-desenvolvimento-de-colecoes-pdc/", sub: [
+        { n: "Doação de Livros", url: SB + "doacao-de-livros/" },
+      ]},
+      { n: "Programa de regularização de multas nas Bibliotecas da UNIPAMPA", url: SB + "programa_de_regularizacao_de_multas/" },
+    ]},
+    { id: "sisbi", nome: "SisBi", oficial: SB + "sisbi/", desc: "Sobre o Sistema de Bibliotecas da Unipampa e suas unidades.", itens: [
+      { n: "Perguntas frequentes", url: SB + "perguntas-frequentes-2/" },
+      { n: "SisBi", url: SB + "sisbi/" },
+      { n: "Unidades", sub: [
+        { n: "Sistema de bibliotecas", url: SB + "sisbi-2/" },
+        { n: "Bibliotecas", interno: "bibliotecas" },
+      ]},
+    ]},
+    { id: "acessibilidade", nome: "Acessibilidade", oficial: SB + "acessibilidade/", desc: "Acervo e serviços acessíveis das bibliotecas.", itens: [
+      { n: "Coleções e Serviços Acessíveis", url: SB + "colecoes-e-servicos-acessiveis/" },
+    ]},
+  ];
+
+  // Link de um item: interno (#hash) ou externo (nova aba, com ↗)
+  const sbHref = (it) => it.interno
+    ? `href="#${it.interno}"`
+    : `href="${it.url}" target="_blank" rel="noopener" title="Abre no site oficial do SisBi (nova aba)"`;
+  const sbSeta = (it) => (it.interno ? "" : ' <span class="sb-ext" aria-hidden="true">↗</span>');
+
+  function sbItensMenu(itens, nivel) {
+    return itens.map((it) => {
+      const rotulo = it.url || it.interno
+        ? `<a ${sbHref(it)}>${it.n}${sbSeta(it)}</a>`
+        : `<span class="sb-grupo-rotulo">${it.n}</span>`;
+      const sub = it.sub ? `<ul class="sb-sub">${sbItensMenu(it.sub, nivel + 1)}</ul>` : "";
+      return `<li class="${it.sub ? "sb-tem-sub" : ""}">${rotulo}${sub}</li>`;
+    }).join("");
+  }
+
   const SISBI_BAR = `
-    <div class="sisbi-bar">
-      <a href="#" class="noop">Consulta ao acervo | Renovações e Reservas ▾</a>
-      <a href="#" class="noop">Pesquisa ▾</a>
-      <a href="#" class="noop">Serviços ▾</a>
-      <a href="#" class="noop">Editais</a>
-      <a href="#" class="noop">Regimentos e normas ▾</a>
-      <a href="#" class="noop">SisBi ▾</a>
-      <a href="#" class="noop">Acessibilidade ▾</a>
-    </div>`;
+    <nav class="sisbi-bar" aria-label="Menu do Sistema de Bibliotecas (SisBi)">
+      ${SISBI_MENU.map((s) => `
+        <div class="sb-item">
+          <a href="#sisbi-${s.id}" class="sb-link">${s.nome}</a>${s.semMenu ? "" : `<button type="button" class="sb-toggle" aria-expanded="false" aria-controls="sb-dd-${s.id}" aria-label="Abrir submenu ${s.nome}">▾</button>
+          <ul class="sb-dd" id="sb-dd-${s.id}">${sbItensMenu(s.itens, 0)}</ul>`}
+        </div>`).join("")}
+    </nav>`;
 
   // ---------------- Páginas ----------------
   // tab = qual aba do menu principal fica destacada
@@ -662,6 +765,39 @@ function iniciar() {
       <img src="img/sisbi-logos-2.png" alt="Publica-se, Portal SBE, Bases de Livre Acesso e a revista do SisBi" width="336" height="803">
     </div>`
   };
+
+
+  // ---------------- Páginas do menu do SisBi ----------------
+  function sbBotao(it) {
+    return `<a class="big-btn small-text sb-btn" ${sbHref(it)}>${it.n}${sbSeta(it)}</a>`;
+  }
+  SISBI_MENU.forEach((s) => {
+    PAGES["sisbi-" + s.id] = { tab: "bibliotecas", pai: "bibliotecas", titulo: s.nome, html: () => {
+      let corpo;
+      if (s.anos) {
+        corpo = s.anos.map((a) => `
+          <h3 class="sb-ano">${a.ano}</h3>
+          <ul class="sb-editais">${a.itens.map((it) => `<li><a ${sbHref(it)}>${it.n}${sbSeta(it)}</a></li>`).join("")}</ul>`).join("");
+      } else {
+        const simples = s.itens.filter((it) => !it.sub);
+        const grupos = s.itens.filter((it) => it.sub);
+        corpo = `
+          ${simples.length ? `<div class="sb-btns">${simples.map(sbBotao).join("")}</div>` : ""}
+          ${grupos.map((g) => `
+            <section class="sb-secao">
+              <h3>${g.url || g.interno ? `<a ${sbHref(g)}>${g.n}${sbSeta(g)}</a>` : g.n}</h3>
+              <div class="sb-btns">${g.sub.map(sbBotao).join("")}</div>
+            </section>`).join("")}`;
+      }
+      return `
+        ${SISBI_BAR}
+        ${back("bibliotecas", "Bibliotecas")}
+        <h2 class="page-title light">${s.nome}</h2>
+        ${s.desc ? `<p class="sb-intro">${s.desc}</p>` : ""}
+        ${corpo}
+        <p class="sb-nota"><span aria-hidden="true">↗</span> abre no site oficial em uma nova aba.${s.oficial ? ` <a href="${s.oficial}" target="_blank" rel="noopener">Ver esta página no site oficial do SisBi ↗</a>` : ""}</p>`;
+    }};
+  });
 
   // =====================================================
   // Páginas trazidas do site oficial (v2)
@@ -1057,6 +1193,7 @@ function iniciar() {
       ${grupo("Estudantes e pesquisa", ["representacao-discente", "representante-discente", "grupos-de-pesquisa", "laboratorios"])}
       ${grupo("Projetos", PROJETOS.map((p) => "projetos-" + p.id))}
       ${grupo("Bibliotecas", [...BIBLIOTECAS.map((b) => "biblioteca-" + b.id), "biblioteca-mais-infos"])}
+      ${grupo("Sistema de Bibliotecas (SisBi)", SISBI_MENU.map((m) => "sisbi-" + m.id))}
       ${grupo("Notícias", ["noticias", ...NOTICIAS.map((n) => "noticia-" + n.id)])}
       ${grupo("Outros", ["inicio", "ppc-anteriores", "politica-de-cookies"])}
     </div>`;
@@ -1121,6 +1258,35 @@ function iniciar() {
   const toTop = $("#to-top");
   window.addEventListener("scroll", () => { toTop.hidden = window.scrollY < 300; }, { passive: true });
   toTop.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: "smooth" }); $(".site-header a").focus({ preventScroll: true }); });
+
+  // Menu do SisBi: abre/fecha os submenus pelo botão ▾ (mouse e teclado também abrem por hover/foco)
+  function fecharMenusSisbi(exceto) {
+    document.querySelectorAll(".sb-item.open").forEach((it) => {
+      if (it === exceto) return;
+      it.classList.remove("open");
+      const b = it.querySelector(".sb-toggle");
+      if (b) b.setAttribute("aria-expanded", "false");
+    });
+  }
+  document.addEventListener("click", (e) => {
+    const t = e.target.closest(".sb-toggle");
+    if (t) {
+      const item = t.closest(".sb-item");
+      const abrir = !item.classList.contains("open");
+      fecharMenusSisbi(item);
+      item.classList.toggle("open", abrir);
+      t.setAttribute("aria-expanded", String(abrir));
+      return;
+    }
+    if (!e.target.closest(".sb-dd")) fecharMenusSisbi(null);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && document.querySelector(".sb-item.open")) {
+      const aberto = document.querySelector(".sb-item.open .sb-toggle");
+      fecharMenusSisbi(null);
+      if (aberto) aberto.focus();
+    }
+  });
 
   // ---------------- Roteador ----------------
   const DEFAULT = "inicio";
