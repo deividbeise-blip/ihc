@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Engenharia de Software – Unipampa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Barra gov.br -->
+  <div class="gov-bar">
+    <div class="wrap gov-bar__inner">
+      <span class="gov-logo">gov<b>.</b>br</span>
+      <nav class="gov-links" aria-label="Governo">
+        <a href="#" class="noop">Comunica BR</a>
+        <a href="#" class="noop">Acesso à informação</a>
+        <a href="#" class="noop">Participe</a>
+        <a href="#" class="noop">Legislação</a>
+        <a href="#" class="noop">Órgãos do governo</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Barra de acessibilidade -->
+  <div class="acc-bar">
+    <div class="wrap acc-bar__inner">
+      <div class="acc-skip">
+        <a href="#conteudo" class="skip" data-skip="conteudo">Ir para o conteúdo <kbd>1</kbd></a>
+        <a href="#menu" class="skip" data-skip="menu">Ir para o menu <kbd>2</kbd></a>
+        <a href="#busca" class="skip" data-skip="busca">Ir para a busca <kbd>3</kbd></a>
+        <a href="#rodape" class="skip" data-skip="rodape">Ir para o rodapé <kbd>4</kbd></a>
+      </div>
+      <div class="acc-tools">
+        <button type="button" id="btn-contraste">Alto contraste</button>
+        <button type="button" id="btn-cinza">Escala de cinza</button>
+        <a href="#" class="noop">Mapa do site</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a href="#informacoes" class="brand">
+        <img src="img/logo-unipampa.png" alt="Unipampa – Universidade Federal do Pampa" width="170" height="110">
+      </a>
+      <h1 class="site-title">Engenharia de Software</h1>
+    </div>
+  </header>
+
+  <!-- Menu principal -->
+  <nav class="main-nav" id="menu" aria-label="Menu principal">
+    <div class="wrap main-nav__inner">
+      <ul class="main-nav__list">
+        <li><a href="#informacoes" data-tab="informacoes" class="strong">Informações</a></li>
+        <li><a href="#ppc" data-tab="ppc">PPC</a></li>
+        <li><a href="#projetos" data-tab="projetos">Projetos</a></li>
+        <li><a href="#horarios" data-tab="horarios">Horários</a></li>
+        <li><a href="#docentes" data-tab="docentes">Docentes</a></li>
+        <li><a href="#infraestrutura" data-tab="infraestrutura">Infraestrutura</a></li>
+        <li><a href="#contato" data-tab="contato">Contato</a></li>
+        <li><a href="#bibliotecas" data-tab="bibliotecas">Bibliotecas</a></li>
+      </ul>
+      <div class="nav-search" id="busca">
+        <input type="text" id="nav-search-input" aria-label="Filtrar pesquisa" tabindex="-1">
+        <button type="button" id="btn-busca" aria-label="Abrir pesquisa">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <!-- Menu lateral esquerdo -->
+    <aside class="side-left" aria-label="Menu do curso">
+      <ul>
+        <li><a href="#" class="noop has-sub">O Curso</a></li>
+        <li><a href="#" class="noop">Perfil do Egresso</a></li>
+        <li><a href="#" class="noop">Agenda</a></li>
+        <li><a href="#" class="noop">Avaliações MEC</a></li>
+        <li><a href="#docentes">Docentes</a></li>
+        <li><a href="#" class="noop">Trabalho de Conclusão</a></li>
+        <li><a href="#" class="noop">Estágio Obrigatório</a></li>
+        <li><a href="#" class="noop">Atividades Complementares</a></li>
+        <li><a href="#" class="noop has-sub">Representação Discente</a></li>
+        <li><a href="#projetos-pesquisa">Grupos de Pesquisa</a></li>
+        <li><a href="#infraestrutura">Laboratórios</a></li>
+        <li><a href="#" class="noop">Notícias</a></li>
+        <li><a href="#horarios">Horários</a></li>
+      </ul>
+      <div class="side-left__fill"></div>
+    </aside>
+
+    <!-- Conteúdo dinâmico -->
+    <main class="content" id="conteudo" tabindex="-1"></main>
+
+    <!-- Barra lateral direita -->
+    <aside class="side-right" aria-label="Informações rápidas">
+      <p class="welcome">Seja bem-vindo à página do curso de Engenharia de Software</p>
+
+      <section class="widget">
+        <h2>Agenda</h2>
+        <h3>Outubro 2026</h3>
+        <table class="calendar" id="calendar"></table>
+        <a href="#" class="noop small-link">« nov</a>
+      </section>
+
+      <section class="widget">
+        <h2>Notícias</h2>
+        <ul class="news">
+          <li><a href="#" class="noop">Unipampa se destaca na IX Escola Regional de Engenharia de Software (ERES 2025)</a></li>
+          <li><a href="#" class="noop">Relatório Atuação da Coordenação de Curso (2025/1)</a></li>
+          <li><a href="#" class="noop">2ª edição do Workshop Gurias Of Code reúne participantes para desbravar a arte da programação na Unipampa Alegrete</a></li>
+          <li><a href="#" class="noop">Unipampa Se Destaca Na VIII Escola Regional de Engenharia de Software (ERES 2024)</a></li>
+          <li><a href="#" class="noop">Ajuste Presencial 2024/02</a></li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="site-footer" id="rodape" tabindex="-1">
+    <div class="wrap">
+      Universidade Federal do Pampa – Campus Alegrete · Av. Tiarajú, 810 – Ibirapuitã, Alegrete – RS · Protótipo navegável (trabalho de IHC)
+    </div>
+  </footer>
+
+  <!-- Modal de pesquisa -->
+  <div class="modal-backdrop" id="search-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="search-title">
+      <div class="modal__head">
+        <h2 id="search-title">Campo de pesquisa</h2>
+        <button type="button" class="modal__close" id="search-close" aria-label="Fechar pesquisa">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="2.6"/></svg>
+        </button>
+      </div>
+      <hr class="modal__rule">
+      <input type="text" id="search-input" class="modal__input" placeholder="Digite aqui" autocomplete="off">
+      <hr class="modal__rule">
+      <div class="modal__body" id="search-body">
+        <p class="modal__hint" id="search-hint" hidden>Utilize a barra superior para filtrar a pesquisa</p>
+        <ul class="search-results" id="search-results"></ul>
+      </div>
+      <div class="modal__foot">
+        <label class="check">
+          <input type="checkbox" id="search-advanced">
+          <span class="check__box" aria-hidden="true"></span>
+          Pesquisa avançada
+        </label>
+        <button type="button" class="btn-buscar" id="search-go">Buscar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
