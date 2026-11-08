@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Engenharia de Software – Unipampa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Barra gov.br -->
+  <div class="gov-bar">
+    <div class="wrap gov-bar__inner">
+      <span class="gov-logo">gov<b>.</b>br</span>
+      <nav class="gov-links" aria-label="Governo">
+        <a href="#" class="noop">Comunica BR</a>
+        <a href="#" class="noop">Acesso à informação</a>
+        <a href="#" class="noop">Participe</a>
+        <a href="#" class="noop">Legislação</a>
+        <a href="#" class="noop">Órgãos do governo</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Barra de acessibilidade -->
+  <div class="acc-bar">
+    <div class="wrap acc-bar__inner">
+      <div class="acc-skip">
+        <a href="#conteudo" class="skip" data-skip="conteudo">Ir para o conteúdo <kbd>1</kbd></a>
+        <a href="#menu" class="skip" data-skip="menu">Ir para o menu <kbd>2</kbd></a>
+        <a href="#busca" class="skip" data-skip="busca">Ir para a busca <kbd>3</kbd></a>
+        <a href="#rodape" class="skip" data-skip="rodape">Ir para o rodapé <kbd>4</kbd></a>
+      </div>
+      <div class="acc-tools">
+        <button type="button" id="btn-contraste">Alto contraste</button>
+        <button type="button" id="btn-cinza">Escala de cinza</button>
+        <a href="#mapa-do-site">Mapa do site</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a href="#inicio" class="brand">
+        <img src="img/logo-unipampa.png" alt="Unipampa – Universidade Federal do Pampa" width="170" height="110">
+      </a>
+      <h1 class="site-title"><a href="#inicio">Engenharia de Software</a></h1>
+    </div>
+  </header>
+
+  <!-- Menu principal -->
+  <nav class="main-nav" id="menu" aria-label="Menu principal">
+    <div class="wrap main-nav__inner">
+      <ul class="main-nav__list">
+        <li><a href="#informacoes" data-tab="informacoes" class="strong">Informações</a></li>
+        <li><a href="#ppc" data-tab="ppc">PPC</a></li>
+        <li><a href="#projetos" data-tab="projetos">Projetos</a></li>
+        <li><a href="#horarios" data-tab="horarios">Horários</a></li>
+        <li><a href="#docentes" data-tab="docentes">Docentes</a></li>
+        <li><a href="#infraestrutura" data-tab="infraestrutura">Infraestrutura</a></li>
+        <li><a href="#contato" data-tab="contato">Contato</a></li>
+        <li><a href="#bibliotecas" data-tab="bibliotecas">Bibliotecas</a></li>
+      </ul>
+      <div class="nav-search" id="busca">
+        <input type="text" id="nav-search-input" aria-label="Filtrar pesquisa" tabindex="-1">
+        <button type="button" id="btn-busca" aria-label="Abrir pesquisa">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <!-- Menu lateral esquerdo -->
+    <aside class="side-left" aria-label="Menu do curso" id="menu-lateral">
+      <ul class="side-menu">
+        <li><a href="#inicio" data-side="inicio">Início</a></li>
+        <li class="has-sub">
+          <div class="side-row"><a href="#o-curso" data-side="o-curso">O Curso</a><button type="button" class="sub-toggle" aria-expanded="false" aria-controls="sub-curso" aria-label="Abrir submenu O Curso"></button></div>
+          <ul class="submenu" id="sub-curso" hidden>
+            <li><a href="#apresentacao" data-side="apresentacao">Apresentação</a></li>
+            <li><a href="#ingresso" data-side="ingresso">Ingresso</a></li>
+            <li><a href="#metodologia" data-side="metodologia">Metodologia</a></li>
+            <li><a href="#matriz-curricular" data-side="matriz-curricular">Matriz Curricular</a></li>
+            <li><a href="#coordenacao" data-side="coordenacao">Coordenação</a></li>
+            <li><a href="#docentes" data-side="docentes">Corpo Docente</a></li>
+            <li><a href="#nde" data-side="nde">Núcleo Docente Estruturante</a></li>
+          </ul>
+        </li>
+        <li><a href="#perfil-do-egresso" data-side="perfil-do-egresso">Perfil do Egresso</a></li>
+        <li><a href="#agenda" data-side="agenda">Agenda</a></li>
+        <li><a href="#avaliacoes-mec" data-side="avaliacoes-mec">Avaliações MEC</a></li>
+        <li><a href="#docentes" data-side="docentes">Docentes</a></li>
+        <li><a href="#trabalho-de-conclusao" data-side="trabalho-de-conclusao">Trabalho de Conclusão</a></li>
+        <li><a href="#estagio-obrigatorio" data-side="estagio-obrigatorio">Estágio Obrigatório</a></li>
+        <li><a href="#atividades-complementares" data-side="atividades-complementares">Atividades Complementares</a></li>
+        <li class="has-sub">
+          <div class="side-row"><a href="#representacao-discente" data-side="representacao-discente">Representação Discente</a><button type="button" class="sub-toggle" aria-expanded="false" aria-controls="sub-rep" aria-label="Abrir submenu Representação Discente"></button></div>
+          <ul class="submenu" id="sub-rep" hidden>
+            <li><a href="#representante-discente" data-side="representante-discente">Representante Discente do Curso</a></li>
+          </ul>
+        </li>
+        <li><a href="#grupos-de-pesquisa" data-side="grupos-de-pesquisa">Grupos de Pesquisa</a></li>
+        <li><a href="#laboratorios" data-side="laboratorios">Laboratórios</a></li>
+        <li><a href="#noticias" data-side="noticias">Notícias</a></li>
+        <li><a href="#horarios" data-side="horarios">Horários</a></li>
+        <li><a href="#comissao-do-curso" data-side="comissao-do-curso">Comissão do curso</a></li>
+      </ul>
+      <div class="side-left__fill"></div>
+    </aside>
+
+    <!-- Conteúdo dinâmico -->
+    <main class="content" id="conteudo" tabindex="-1"></main>
+
+    <!-- Barra lateral direita -->
+    <aside class="side-right" aria-label="Informações rápidas">
+      <p class="welcome">Seja bem-vindo à página do curso de Engenharia de Software</p>
+
+      <section class="widget">
+        <h2>Agenda</h2>
+        <h3 id="cal-titulo" aria-live="polite">Outubro 2026</h3>
+        <table class="calendar" id="calendar"></table>
+        <div class="cal-nav">
+          <button type="button" id="cal-prev" class="small-link">« out</button>
+          <button type="button" id="cal-next" class="small-link">dez »</button>
+        </div>
+      </section>
+
+      <section class="widget">
+        <h2>Notícias</h2>
+        <ul class="news">
+          <li><a href="#noticia-eres-2025">Unipampa se destaca na IX Escola Regional de Engenharia de Software (ERES 2025)</a></li>
+          <li><a href="#noticia-relatorio-coordenacao-2025-1">Relatório Atuação da Coordenação de Curso (2025/1)</a></li>
+          <li><a href="#noticia-gurias-of-code-2025">2ª edição do Workshop Gurias Of Code reúne participantes para desbravar a arte da programação na Unipampa Alegrete</a></li>
+          <li><a href="#noticia-eres-2024">Unipampa Se Destaca Na VIII Escola Regional de Engenharia de Software (ERES 2024)</a></li>
+          <li><a href="#noticia-ajuste-presencial-2024-02">Ajuste Presencial 2024/02</a></li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="site-footer" id="rodape" tabindex="-1">
+    <div class="wrap footer-grid">
+      <div>
+        <strong>Engenharia de Software – Campus Alegrete</strong><br>
+        Av. Tiarajú, 810 – Ibirapuitã – Alegrete – RS · CEP 97546-550<br>
+        (55) 3421-8405 · ales@listas.unipampa.edu.br
+      </div>
+      <nav class="footer-links" aria-label="Links do rodapé">
+        <a href="#mapa-do-site">Mapa do site</a>
+        <a href="#politica-de-cookies">Política de cookies</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+    <div class="wrap footer-copy">© 2014 Universidade Federal do Pampa - UNIPAMPA · Protótipo navegável (trabalho de IHC)</div>
+  </footer>
+
+  <!-- Aviso de cookies -->
+  <div class="cookie-bar" id="cookie-bar" role="region" aria-label="Aviso de cookies" hidden>
+    <p>Este site utiliza cookies para melhorar a experiência de navegação dos usuários. <a href="#politica-de-cookies">Política de cookies</a></p>
+    <div class="cookie-bar__btns">
+      <button type="button" id="cookie-aceitar">Aceitar</button>
+      <button type="button" id="cookie-fechar" class="ghost">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Voltar ao topo -->
+  <button type="button" class="to-top" id="to-top" aria-label="Voltar ao topo" hidden>↑</button>
+
+  <!-- Modal de pesquisa -->
+  <div class="modal-backdrop" id="search-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="search-title">
+      <div class="modal__head">
+        <h2 id="search-title">Campo de pesquisa</h2>
+        <button type="button" class="modal__close" id="search-close" aria-label="Fechar pesquisa">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="2.6"/></svg>
+        </button>
+      </div>
+      <hr class="modal__rule">
+      <input type="text" id="search-input" class="modal__input" placeholder="Digite aqui" autocomplete="off">
+      <hr class="modal__rule">
+      <div class="modal__body" id="search-body">
+        <p class="modal__hint" id="search-hint" hidden>Utilize a barra superior para filtrar a pesquisa</p>
+        <ul class="search-results" id="search-results"></ul>
+      </div>
+      <div class="modal__foot">
+        <label class="check">
+          <input type="checkbox" id="search-advanced">
+          <span class="check__box" aria-hidden="true"></span>
+          Pesquisa avançada
+        </label>
+        <button type="button" class="btn-buscar" id="search-go">Buscar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
