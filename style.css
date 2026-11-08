@@ -75,16 +75,21 @@ button { font: inherit; cursor: pointer; }
 .main-nav__list a.active { border-color: #000; }
 
 .nav-search { display: flex; align-items: stretch; border: 2px solid transparent; }
-.nav-search input {
-  width: 0; padding: 0; border: 0; background: var(--verde); color: #fff;
-  transition: width .2s ease;
-}
 .nav-search button {
   width: 38px; border: 0; background: var(--verde-escuro); color: #fff;
   display: grid; place-items: center;
 }
 .nav-search.open { border-color: #000; }
-.nav-search.open input { width: 120px; padding: 0 6px; }
+
+/* Pesquisa avançada: abas superiores viram filtros de categoria (ficam acima do fundo do modal) */
+body.busca-avancada .main-nav { position: sticky; top: 0; z-index: 51; box-shadow: 0 2px 0 #000; }
+body.busca-avancada .main-nav__list a { cursor: pointer; border: 2px dashed rgba(255,255,255,.55); }
+body.busca-avancada .main-nav__list a:hover { border-color: #fff; }
+body.busca-avancada .main-nav__list a.filtro-on {
+  background: #fff; color: var(--verde-escuro); border: 2px solid #000; text-decoration: none;
+}
+body.busca-avancada .main-nav__list a:focus-visible { outline: 3px solid #f5c400; outline-offset: 1px; }
+body.contraste.busca-avancada .main-nav__list a.filtro-on { background: #ffeb3b; color: #000 !important; }
 
 /* ---------- Layout de 3 colunas ---------- */
 .layout {
@@ -288,6 +293,7 @@ button { font: inherit; cursor: pointer; }
 .modal__input:focus { outline: none; }
 .modal__body { flex: 1; padding: 10px 18px; display: flex; flex-direction: column; justify-content: center; }
 .modal__hint { font-size: 19px; margin: 0; }
+.search-filtros { margin: 0 0 8px; font-size: 13px; font-weight: 600; color: var(--verde-escuro); }
 .search-results { list-style: none; padding: 0; margin: 0; align-self: stretch; }
 .search-results li { padding: 6px 0; border-bottom: 1px solid #d5d5d5; font-size: 14px; }
 .search-results li.none { color: #666; border: 0; }

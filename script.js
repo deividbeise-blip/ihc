@@ -988,12 +988,17 @@ function iniciar() {
   // ---------------- Pesquisa ----------------
   const modal = $("#search-modal");
   const navSearch = $(".nav-search");
-  const navInput = $("#nav-search-input");
   const input = $("#search-input");
   const advanced = $("#search-advanced");
   const hint = $("#search-hint");
+  const statusFiltros = $("#search-filtros");
   const results = $("#search-results");
   const body = $("#search-body");
+  const nav = $(".main-nav");
+  // Pesquisa avançada: as abas do menu superior viram filtros de categoria
+  const abas = [...document.querySelectorAll(".main-nav__list a[data-tab]")];
+  const filtros = new Set(); // data-tab das abas selecionadas
+  const HINT_AVANCADA = "Clique nas abas da barra superior para filtrar a pesquisa por categoria";
   let ultimoFoco = null;
 
   function textoDaPagina(id) {
@@ -1002,23 +1007,66 @@ function iniciar() {
     const extra = PAGES[id].busca ? " " + PAGES[id].busca() : "";
     return (PAGES[id].titulo + " " + tmp.textContent + extra).toLowerCase();
   }
-  const semAcento = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const semAcento = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  // Categoria (aba superior) de uma página: a própria aba ou a aba da página-pai
+  function abaDe(id) {
+    const p = PAGES[id];
+    if (p.tab) return p.tab;
+    return p.pai && PAGES[p.pai] ? PAGES[p.pai].tab : null;
+  }
+  const nomeAba = (tab) => abas.find((a) => a.dataset.tab === tab).textContent.trim();
+  const avancadaAtiva = () => document.body.classList.contains("busca-avancada");
+
+  // Liga/desliga o modo "abas como filtros" (só enquanto o modal está aberto e a caixa marcada)
+  function modoAvancado(on) {
+    document.body.classList.toggle("busca-avancada", on);
+    if (!on) filtros.clear();
+    abas.forEach((a) => {
+      const sel = on && filtros.has(a.dataset.tab);
+      a.classList.toggle("filtro-on", sel);
+      if (on) {
+        a.setAttribute("role", "button");
+        a.setAttribute("aria-pressed", String(sel));
+      } else {
+        a.removeAttribute("role");
+        a.removeAttribute("aria-pressed");
+      }
+    });
+    statusFiltros.hidden = !on || !filtros.size;
+    statusFiltros.textContent = filtros.size ? "Filtrando por: " + [...filtros].map(nomeAba).join(", ") : "";
+    posicionarModal();
+  }
+  function alternarFiltro(tab) {
+    if (filtros.has(tab)) filtros.delete(tab); else filtros.add(tab);
+    modoAvancado(true);
+    buscar();
+  }
+  // Com a barra superior fixa por cima do fundo do modal, garante que ela não cubra o modal
+  // (relevante em telas estreitas, onde o menu quebra em várias linhas)
+  function posicionarModal() {
+    modal.style.paddingTop = "";
+    if (!avancadaAtiva()) return;
+    const base = parseFloat(getComputedStyle(modal).paddingTop) || 0;
+    const fundoNav = nav.getBoundingClientRect().bottom + 12;
+    if (fundoNav > base) modal.style.paddingTop = fundoNav + "px";
+  }
 
   function abrirBusca() {
     ultimoFoco = document.activeElement;
     modal.hidden = false;
     navSearch.classList.add("open");
-    navInput.tabIndex = 0;
     results.innerHTML = "";
     body.classList.remove("has-results");
+    hint.textContent = HINT_AVANCADA;
     hint.hidden = !advanced.checked;
+    modoAvancado(advanced.checked);
     input.focus();
   }
   // devolverFoco = false quando um resultado é clicado (a navegação já leva o usuário à nova página)
   function fecharBusca(devolverFoco = true) {
     modal.hidden = true;
     navSearch.classList.remove("open");
-    navInput.tabIndex = -1;
+    modoAvancado(false);
     if (devolverFoco && ultimoFoco) ultimoFoco.focus();
   }
   function onde(id) {
@@ -1027,36 +1075,58 @@ function iniciar() {
     return paiId && PAGES[paiId] ? "Dentro de " + PAGES[paiId].titulo : "Página principal";
   }
   function buscar() {
-    const termo = semAcento((input.value + " " + (advanced.checked ? navInput.value : "")).trim());
-    if (!termo) {
+    const termo = semAcento(input.value.trim());
+    const usarFiltros = advanced.checked && filtros.size > 0;
+    if (!termo && !usarFiltros) {
       hint.hidden = false;
-      hint.textContent = advanced.checked ? "Utilize a barra superior para filtrar a pesquisa" : "Digite o que você procura no campo acima.";
+      hint.textContent = advanced.checked ? HINT_AVANCADA : "Digite o que você procura no campo acima.";
       results.innerHTML = "";
       body.classList.remove("has-results");
       return;
     }
-    const palavras = termo.split(/\s+/);
+    const palavras = termo ? termo.split(/\s+/) : [];
     const achados = Object.keys(PAGES).filter((id) => {
+      if (usarFiltros && !filtros.has(abaDe(id))) return false;
+      if (!palavras.length) return true;
       const txt = semAcento(textoDaPagina(id));
       return palavras.every((p) => txt.includes(p));
     });
+    const emCategorias = usarFiltros ? " em " + [...filtros].map(nomeAba).join(", ") : "";
+    const para = input.value.trim() ? ` para “${esc(input.value.trim())}”` : "";
     hint.hidden = true;
     body.classList.add("has-results");
     results.innerHTML = achados.length
       ? achados.map((id) => `<li><a href="#${id}" data-close>${PAGES[id].titulo}</a><small>${onde(id)}</small></li>`).join("")
-      : `<li class="none">Nenhum resultado para “${esc(input.value)}”. Tente outra palavra, como “biblioteca”, “laboratório” ou o nome de um docente.</li>`;
+      : `<li class="none">Nenhum resultado${para}${esc(emCategorias)}. ${usarFiltros ? "Tente remover algum filtro ou usar outra palavra." : "Tente outra palavra, como “biblioteca”, “laboratório” ou o nome de um docente."}</li>`;
   }
 
   $("#btn-busca").addEventListener("click", () => (modal.hidden ? abrirBusca() : fecharBusca()));
   $("#search-close").addEventListener("click", () => fecharBusca());
   $("#search-go").addEventListener("click", buscar);
   input.addEventListener("keydown", (e) => { if (e.key === "Enter") buscar(); });
-  navInput.addEventListener("keydown", (e) => { if (e.key === "Enter") buscar(); });
   advanced.addEventListener("change", () => {
-    hint.textContent = "Utilize a barra superior para filtrar a pesquisa";
-    hint.hidden = !advanced.checked || body.classList.contains("has-results");
-    if (advanced.checked) navInput.focus();
+    modoAvancado(advanced.checked);
+    if (body.classList.contains("has-results")) { buscar(); return; }
+    hint.textContent = HINT_AVANCADA;
+    hint.hidden = !advanced.checked;
+    if (advanced.checked) abas[0].focus();
   });
+  // No modo avançado, clicar numa aba alterna o filtro em vez de navegar
+  abas.forEach((a) => {
+    a.addEventListener("click", (e) => {
+      if (!avancadaAtiva()) return;
+      e.preventDefault();
+      alternarFiltro(a.dataset.tab);
+    });
+    // role="button": Espaço também ativa (Enter já dispara o click do link)
+    a.addEventListener("keydown", (e) => {
+      if (!avancadaAtiva() || e.key !== " ") return;
+      e.preventDefault();
+      alternarFiltro(a.dataset.tab);
+    });
+  });
+  window.addEventListener("resize", posicionarModal);
+  window.addEventListener("scroll", () => { if (avancadaAtiva()) posicionarModal(); }, { passive: true });
   modal.addEventListener("click", (e) => {
     if (e.target === modal) fecharBusca();
     if (e.target.closest("[data-close]")) fecharBusca(false);
@@ -1065,8 +1135,8 @@ function iniciar() {
     if (modal.hidden) return;
     if (e.key === "Escape") { fecharBusca(); return; }
     if (e.key !== "Tab") return;
-    // focus trap: Tab/Shift+Tab circulam só dentro do modal (e no campo superior, na pesquisa avançada)
-    const focaveis = [...(advanced.checked ? [navInput] : []),
+    // focus trap: Tab/Shift+Tab circulam só dentro do modal (e nas abas superiores, na pesquisa avançada)
+    const focaveis = [...(avancadaAtiva() ? abas : []),
       ...modal.querySelectorAll('button, input, a[href], [tabindex]:not([tabindex="-1"])')]
       .filter((el) => !el.disabled && !el.closest("[hidden]"));
     if (!focaveis.length) return;
