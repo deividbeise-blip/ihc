@@ -24,24 +24,157 @@ function iniciar() {
     ["CLAUDIO SCHEPKE", "claudioschepke@unipampa.edu.br", "http://lattes.cnpq.br/6412713158883137"],
   ];
 
+  // Tabelas de projetos transcritas das capturas img/<id>-N.png (colunas: projeto, registro, coordenador, período)
   const PROJETOS = [
-    { id: "pesquisa", nome: "Pesquisa", imgs: ["pesquisa-1", "pesquisa-2", "pesquisa-3"] },
-    { id: "extensao", nome: "Extensão", imgs: ["extensao-1", "extensao-2"] },
-    { id: "inovacao", nome: "Inovação", imgs: ["inovacao"] },
-    { id: "ensino", nome: "Ensino", imgs: ["ensino-1", "ensino-2"] },
-    { id: "inclusao", nome: "Inclusão e diversidade", imgs: ["inclusao-1", "inclusao-2"], small: true },
-    { id: "empreendedorismo", nome: "Empreendedorismo", imgs: ["empreendedorismo"], small: true },
-    { id: "gestao", nome: "Gestão acadêmica", imgs: ["gestao"], small: true },
-    { id: "assuntos", nome: "Assuntos estudantis", imgs: ["assuntos-1", "assuntos-2"], small: true },
+    { id: "pesquisa", nome: "Pesquisa", lista: [
+      ["Algoritmos, Métodos e Ferramentas para a Agricultura Digital", "2025.PE.BG.4043", "Ana Paula Ludtke Ferreira", "03/03/2025 - 03/03/2029"],
+      ["Alocação de Recursos Computacionais em Infraestruturas Distribuídas usando Agentic AI", "2026.PE.AL.5788", "Paulo Silas Severo de Souza", "18/05/2026 - 31/12/2028"],
+      ["Automação de Tarefas de DevOps usando Modelos de Linguagem", "2025.PE.AL.3963", "Paulo Silas Severo de Souza", "01/04/2025 - 30/04/2028"],
+      ["Automação de Tarefas de Suporte Docente com Modelos de Inteligência Artificial Generativa", "2025.PE.AL.4677", "Paulo Silas Severo de Souza", "01/06/2025 - 31/12/2027"],
+      ["Automação do Fluxo da Elaboração de Minutas de Atos Processuais no e-Proc do TJRS com uso de Inteligência Artificial Agêntica", "2026.PE.AL.5820", "Maicon Bernardino da Silveira", "01/06/2026 - 31/12/2028"],
+      ["BioFiltros Inovadores para Degradação de Poluentes Emergente", "2025.PE.AL.5191", "Ana Paula Garcia", "16/03/2026 - 16/03/2030"],
+      ["Certificações sustentáveis e inovação em engenharia: diretrizes para um modelo conceitual de casa sustentável no Brasil", "2025.PE.AL.4220", "Fladimir Fernandes dos Santos", "01/04/2025 - 31/03/2027"],
+      ["Classificação de emoções em imagens de faces utilizando redes neurais profundas convolutivas siamesas", "2024.PE.AL.2834", "Alessandro Bof de Oliveira", "08/01/2024 - 07/01/2028"],
+      ["Composes – Composição Inteligente de Recursos de Melhoria de Processo de Software", "2022.PE.AL.1622", "Joao Pablo Silva da Silva", "01/12/2022 - 30/11/2026"],
+      ["Computação Aplicada", "2025.PE.AL.3983", "Claudio Schepke", "01/04/2025 - 30/09/2028"],
+      ["Desenvolvimento de Ferramentas de Inteligência Artificial para Auxílio no Ensino da Linguagem UML", "2025.PE.AL.4640", "Gilleanes Thorwald Araujo Guedes", "26/05/2025 - 31/05/2027"],
+      ["Desenvolvimento e Análise de uma Plataforma de Simulação Interativa com Visualizações Multi-Representacionais para o Ensino de Eletrônica de Potência", "2025.PE.AL.5083", "Jumar Luis Russi", "01/11/2025 - 01/11/2027"],
+      ["Design Participativo integrado à Engenharia de Software: um framework para o desenvolvimento de software no domínio educacional", "2023.PE.AL.1752", "Amanda Meincke Melo", "13/03/2023 - 12/03/2027"],
+      ["Egress@s", "2025.PE.AL.4614", "Aline Vieira de Mello", "01/07/2025 - 31/12/2028"],
+      ["Engenharia de Qualidade de Software", "2026.PE.AL.5232", "Elder de Macedo Rodrigues", "01/03/2026 - 01/03/2030"],
+      ["Engenharia de Software Aplicada em Sistemas de Informação Inteligentes", "2023.PE.AL.2402", "Maicon Bernardino da Silveira", "12/06/2023 - 01/09/2027"],
+      ["Estudo e Desenvolvimento de Estratégias para Offloading de Tarefas em Ambientes Industriais", "2024.PE.AL.2919", "Paulo Silas Severo de Souza", "31/05/2024 - 31/12/2027"],
+      ["Estudos Empíricos sobre a Colaboração e a Evolução de Processos de Software em Cenários de Inteligência Artificial", "2025.PE.AL.5193", "Anielle Severo Lisboa de Andrade", "04/12/2025 - 03/12/2029"],
+      ["Explorando novos paradigmas de usabilidade nos processos de avaliação de Engenharia de Software", "2024.PE.AL.3658", "Ildevana Poltronieri Rodrigues", "02/01/2025 - 03/01/2028"],
+      ["Ferramentas de Modelagem Semiquantitativa em Nuvem", "2024.PE.AL.3248", "Marcelo Resende Thielo", "01/04/2024 - 31/12/2027"],
+      ["Formação de Portfólios com o Uso de Redes Neurais Artificiais e Distribuição de Probabilidade com Caudas Longas", "2025.PE.AL.4715", "Alexandre Silva de Oliveira", "01/06/2025 - 31/05/2027"],
+      ["Fundamentação para a Engenharia de Software Aplicada ao Desenvolvimento e Transferência de Tecnologia Embarcada Inteligente para o Setor Rural: Sustentabilidade", "2025.PE.AL.4364", "Fabio Paulo Basso", "01/05/2025 - 31/05/2028"],
+      ["Geração de Projetos UML Apoiada por LLMs", "2026.PE.AL.5332", "Gilleanes Thorwald Araujo Guedes", "06/04/2026 - 06/04/2030"],
+      ["História da Computação Pessoal - Preservando Hardware, Software e Experiências", "2023.PE.AL.1996", "Marcelo Resende Thielo", "23/01/2023 - 23/01/2027"],
+      ["Integração de Práticas de Engenharia Dirigida por Modelos e Inteligência Artificial", "2026.PE.AL.5394", "Fabio Paulo Basso", "30/03/2026 - 31/03/2028"],
+      ["Investigação de Técnicas de Inteligência Artificial e Blockchain aplicadas a Cibersegurança, Redes e Sistemas", "2025.PE.AL.4576", "Rodrigo Brandao Mansilha", "01/09/2025 - 31/08/2029"],
+      ["Métricas de Desempenho baseadas em Inteligência Artificial: Aplicações em Sistemas de Comunicações Móveis", "2025.PE.AL.4450", "Eliezer Soares Flores", "01/08/2025 - 31/07/2029"],
+      ["Modelagem Esparsa com Dicionários Adaptativos e Transformadores Visuais na Agropecuária 4.0", "2025.PE.AL.4454", "Eliezer Soares Flores", "01/07/2025 - 30/06/2029"],
+      ["Modelos de aprendizagem, métodos e ferramentas para ensino de Computação", "2025.PE.BG.4046", "Ana Paula Ludtke Ferreira", "03/03/2025 - 03/03/2029"],
+      ["Modelos de Linguagem em Larga Escala (LLMs) e Modelos de Linguagem em Pequena Escala (SLMs) Aplicados à Cibersegurança", "2024.PE.AL.3943", "Diego Luis Kreutz", "09/12/2024 - 08/12/2028"],
+      ["Modelos de Múltiplas Camadas e Representações Esparsas para Processamento e Análise de Imagens Médicas", "2023.PE.AL.1948", "Eliezer Soares Flores", "13/03/2023 - 31/12/2026"],
+      ["Otimização de ferramentas de dispositivos de processamento de sinais através redução de operadores trigonométricos", "2026.PE.AL.5288", "Sidinei Ghissoni", "13/03/2026 - 28/02/2031"],
+      ["Otimização e Análise de Sistemas de Arquitetura de Micro-Serviços Voltada para Small Language Models", "2026.PE.AL.5436", "Claudio Schepke", "01/06/2026 - 31/05/2028"],
+      ["Otimização Geométrica de Hiperparâmetros em Redes Neurais para Cibersegurança", "2026.PE.AL.6170", "Dionatan Ricardo Schmidt", "04/09/2026 - 15/12/2028"],
+      ["Projeto e Desenvolvimento de Algoritmos para Identificação de Objetos em Video Streamming", "2025.PE.AL.4604", "Marcelo Caggiani Luizelli", "30/05/2025 - 30/05/2027"],
+      ["SchroEngine - Um Engine para o desenvolvimento de Jogos usando Mecânica Quântica", "2024.PE.AL.3112", "Marcelo Resende Thielo", "01/04/2024 - 31/12/2027"],
+      ["Sistema Multimodal de Predição de Incêndios no Bioma Pampa Utilizando Modelos de Inteligência Artificial", "2026.PE.AL.5554", "Alessandro Bof de Oliveira", "01/04/2026 - 31/03/2028"],
+      ["Tecnologia Computacional para a Educação Étnico-Racial (TeCEER)", "2026.PE.AL.5786", "Amanda Meincke Melo", "01/06/2026 - 31/12/2027"],
+      ["TRAP-IoT: Tecnologia Resiliente para Aplicações em Protocolos IoT", "2024.PE.AL.3683", "Silvio Ereno Quincozes", "20/08/2024 - 20/08/2028"],
+      ["Uma DSL Baseada em BPMN e Infraestrutura de Apoio para o Desenvolvimento de Contratos Inteligentes Independentes de Plataformas", "2024.PE.AL.2837", "Raquel Mainardi Pillat Basso", "05/12/2023 - 01/12/2026"],
+      ["XAIID - Estratégias Inteligentes e Explicáveis para Detecção de Intrusões em Sistemas Ciber-Físicos", "2023.PE.AL.2578", "Silvio Ereno Quincozes", "02/08/2023 - 31/12/2027"],
+    ]},
+    { id: "extensao", nome: "Extensão", lista: [
+      ["AgriPampa - Agricultura e Produção Agropecuária Sustentável no Meio Pampa", "2025.EX.AL.4902", "Diogo Silveira Kersten", "02/09/2025 - 02/09/2027"],
+      ["Aprendizagens interculturais: produção de sentidos na educação - IX Edição", "2026.EX.AL.5615", "Maria Cristina Graeff Wernz", "30/03/2026 - 31/12/2026"],
+      ["Baja Pampa - Projeto e Construção de um veículo Off Road para competição BAJA SAE BRASIL", "2025.EX.AL.4849", "Cristian Pohl Meinhardt", "15/08/2025 - 15/08/2027"],
+      ["Centro de Tecnologia para o Agronegócio (CTA)", "2023.EX.AL.2744", "Elder de Macedo Rodrigues", "02/01/2024 - 02/01/2028"],
+      ["Descobrindo Caminhos Profissionais", "2026.EX.AL.5869", "Luis Ernesto Roca Bruno", "15/10/2026 - 31/12/2027"],
+      ["Despertar o Engenheiro nos jovens através da robótica com software e hardware livre", "2026.EX.AL.5718", "Mauro Fonseca Rodrigues", "06/07/2026 - 31/12/2028"],
+      ["Educador 5.0 - Capacitação de Professores para o Uso de Inteligência Artificial na Educação Básica", "2025.EX.AL.5038", "Silvio Ereno Quincozes", "15/10/2025 - 31/12/2026"],
+      ["Engenharia de Software Aplicada à Causas Sociais: Empreendedorismo Social", "2025.EX.AL.5004", "Fabio Paulo Basso", "01/10/2025 - 29/09/2027"],
+      ["Formando Campeões", "2025.EX.AL.4411", "Cristian Pohl Meinhardt", "11/04/2025 - 31/12/2026"],
+      ["GamificaEdu: Formação Continuada em Gamificação para Professores da Educação Básica", "2025.EX.AL.5040", "Paulo Silas Severo de Souza", "01/11/2025 - 31/10/2027"],
+      ["Gurias Of Code - Desbravando a Arte da Programação", "2025.EX.AL.3962", "Ildevana Poltronieri Rodrigues", "12/03/2025 - 31/05/2028"],
+      ["IA na Sociedade: conteúdo aberto e soluções tecnológicas para a comunidade", "2026.EX.AL.6263", "Diego Luis Kreutz", "15/10/2026 - 14/10/2029"],
+      ["Jykre kar: conversas interculturais", "2025.EX.AL.5009", "Maria Cristina Graeff Wernz", "01/01/2026 - 31/12/2027"],
+      ["Liga do Mercado Financeiro da Unipampa", "2025.EX.AL.4718", "Alexandre Silva de Oliveira", "01/07/2025 - 30/06/2027"],
+      ["Motus - Movimento Literário Digital (2026-2027)", "2026.EX.AL.5235", "Aline Vieira de Mello", "01/04/2026 - 29/02/2028"],
+      ["Movimentos Culturais: Acesso, Formação, e Valorização da Arte e Cultura em Alegrete", "2025.EX.AL.4901", "Aline Vieira de Mello", "01/10/2025 - 30/11/2026"],
+      ["Pampa CTF: plataforma de aprendizado gamificado e competições abertas de cibersegurança", "2026.EX.AL.6212", "Diego Luis Kreutz", "01/10/2026 - 30/09/2028"],
+      ["Programa C - Comunidade, Computação, Cultura, Comunicação, Ciência, Cidadania, Criatividade, Colaboração", "2025.EX.AL.4815", "Aline Vieira de Mello", "18/08/2025 - 17/08/2028"],
+      ["Programa C + Educação Básica", "2024.EX.AL.3845", "Aline Vieira de Mello", "01/01/2025 - 31/12/2028"],
+      ["Programa Codefólio - Construir, Documentar e Disseminar conhecimento", "2025.EX.AL.3974", "Silvio Ereno Quincozes", "14/01/2025 - 13/01/2028"],
+      ["Programa JEDI", "2024.EX.AL.2889", "Maicon Bernardino da Silveira", "20/03/2024 - 20/03/2027"],
+      ["Programa RAF - Rastreamento da Agricultura Familiar (2º Ciclo)", "2026.EX.AL.6251", "Rodrigo Brandao Mansilha", "20/10/2026 - 19/10/2029"],
+      ["Tecnologia Centrada nas Pessoas: formação continuada de docentes da educação básica em tecnologias digitais e inteligência artificial", "2026.EX.AL.6244", "Anielle Severo Lisboa de Andrade", "01/11/2026 - 31/12/2027"],
+      ["Telecomunicações-Radioamadorismo Cidadania e Defesa Civil", "2025.EX.AL.3781", "Luis Ernesto Roca Bruno", "30/09/2024 - 31/12/2026"],
+      ["TRAMAS", "2024.EX.AL.2981", "Amanda Meincke Melo", "18/03/2024 - 31/12/2027"],
+      ["Um periódico de comunicações interna e externa à UNIPAMPA/Alegrete - O Pampa em Pauta", "2025.EX.AL.4025", "Dionatan Ricardo Schmidt", "15/05/2025 - 23/04/2027"],
+      ["VI Fecipampa - Campus Alegrete", "2026.EX.AL.5755", "Lanes Beatriz Acosta Jaques", "07/07/2026 - 31/12/2026"],
+    ]},
+    { id: "inovacao", nome: "Inovação", lista: [
+      ["App ÁGUA PRO MATE", "2026.IN.AL.6145", "Mauro Fonseca Rodrigues", "08/09/2026 - 31/12/2027"],
+      ["App para Meditação na Maternidade", "2026.IN.AL.5943", "Fabio Paulo Basso", "23/06/2026 - 22/06/2029"],
+      ["Busca Chão", "2024.IN.AL.3334", "Mauro Fonseca Rodrigues", "04/04/2024 - 31/12/2026"],
+      ["Desenvolvimento de Soluções com Inteligência Artificial e Smart Contracts", "2025.IN.AL.4577", "Rodrigo Brandao Mansilha", "01/09/2025 - 31/08/2029"],
+      ["Ferramentas de apoio ao ensino de Computação", "2023.IN.AL.2259", "Alice Fonseca Finger", "05/06/2023 - 31/12/2027"],
+      ["IA Adversarial: Ataques e Defesas em Sistemas Inteligentes", "2026.IN.AL.6262", "Diego Luis Kreutz", "15/10/2026 - 14/10/2029"],
+      ["IA Aplicada a Problemas da Sociedade em Organizações Públicas e Privadas", "2026.IN.AL.6264", "Diego Luis Kreutz", "15/10/2026 - 14/10/2029"],
+      ["Inovação Tecnológica em Engenharia de Software com IA Generativa e Agêntica", "2026.IN.AL.5679", "Maicon Bernardino da Silveira", "01/05/2026 - 30/04/2029"],
+      ["Inovações em Tecnologia Social", "2025.IN.AL.4366", "Fabio Paulo Basso", "01/05/2025 - 01/10/2028"],
+      ["IoT aplicado ao agronegócio", "2026.IN.AL.5921", "Elder de Macedo Rodrigues", "15/06/2026 - 01/06/2030"],
+      ["IoTEdu e IoTPass: Governança Orientada por Identidade e Segurança de Dispositivos IoT", "2026.IN.AL.6261", "Diego Luis Kreutz", "15/10/2026 - 14/10/2028"],
+      ["Metodologia Ágil no Desenvolvimento de Carros Voadores", "2025.IN.AL.4724", "Alexandre Silva de Oliveira", "03/06/2025 - 31/05/2027"],
+      ["OMI-SPU: Observatório de Mercado de Imóveis da União com IA e Geoinformação", "2026.IN.AL.6258", "Diego Luis Kreutz", "15/10/2026 - 14/10/2028"],
+      ["Pacote em R para implementacao de Portfolio de Investimentos", "2026.IN.AL.6086", "Alexandre Silva de Oliveira", "19/08/2026 - 19/08/2028"],
+      ["Plataforma Codefólio", "2025.IN.AL.3899", "Silvio Ereno Quincozes", "14/03/2025 - 31/12/2027"],
+      ["Plataforma de Gestão de Ativos de Propriedade Intelectual para ICTs Públicas", "2026.IN.AL.5732", "Ildevana Poltronieri Rodrigues", "11/05/2026 - 30/04/2028"],
+      ["Programa de Rastreabilidade dos Produtos da Agricultura Familiar", "2022.IN.AL.1284", "Diogo Silveira Kersten", "01/08/2022 - 22/12/2026"],
+      ["Um Software Inteligente para Formulação de Problemas Organizacionais", "2025.IN.AL.4466", "Joao Pablo Silva da Silva", "01/07/2025 - 31/12/2027"],
+    ]},
+    { id: "ensino", nome: "Ensino", lista: [
+      ["CrIA: Laboratório de Criatividade e Programação de Jogos para Ingressantes", "2026.EN.AL.5621", "Marcelo Resende Thielo", "23/03/2026 - 24/03/2027"],
+      ["Discente Ensinante, Docente Aprendente", "2026.EN.AL.5888", "Amanda Meincke Melo", "03/08/2026 - 31/12/2027"],
+      ["Ensino da Linguagem UML Apoiado por Inteligência Artificial", "2026.EN.AL.5903", "Gilleanes Thorwald Araujo Guedes", "08/06/2026 - 07/06/2030"],
+      ["Inovação Pedagógica Mediata por Tecnologia: Uma Plataforma Web para Gestão e Disseminação da Avaliação por Rubricas", "2026.EN.AL.5836", "Maicon Bernardino da Silveira", "01/07/2026 - 31/12/2027"],
+      ["Inteligência Artificial Generativa na Pesquisa Acadêmica em Computação: Estratégias Pedagógicas para o Uso Crítico e Responsável", "2026.EN.AL.5831", "Anielle Severo Lisboa de Andrade", "03/08/2026 - 31/12/2027"],
+      ["Liga do Mercado Financeiro", "2025.EN.AL.4717", "Alexandre Silva de Oliveira", "01/06/2025 - 31/05/2027"],
+      ["LOA - Laboratório de Objetos de Aprendizagem: Biênio 2026-2027", "2026.EN.AL.5253", "Maicon Bernardino da Silveira", "13/02/2026 - 13/02/2028"],
+      ["Monitoria Acadêmica em Resolução de Problemas 2026", "2026.EN.AL.5252", "Maicon Bernardino da Silveira", "13/02/2026 - 13/02/2027"],
+      ["Monitoria em Administração e Empreendedorismo", "2026.EN.AL.5371", "Fladimir Fernandes dos Santos", "02/03/2026 - 08/03/2027"],
+      ["Monitoria em Engenharia Econômica", "2025.EN.AL.4099", "Fladimir Fernandes dos Santos", "10/03/2025 - 08/03/2027"],
+      ["PET - CTC CONVIDA: Rodas de conversa e palestras com professores e alunos que estão desenvolvendo pesquisas em diversas áreas", "2026.EN.AL.5194", "Ana Paula Garcia", "01/03/2026 - 31/12/2028"],
+      ["PET - CTC ENSINA: Realização de oficinas e minicursos para os alunos dos cursos de graduação do Campus Alegrete", "2026.EN.AL.5189", "Ana Paula Garcia", "01/03/2026 - 31/12/2028"],
+      ["PET - CTC MENTALIZA: Roda de conversa com profissionais da área saúde mental", "2026.EN.AL.5184", "Ana Paula Garcia", "01/03/2026 - 31/12/2028"],
+      ["PET INGLÊS DESCOMPLICADO: Desenvolvimento e realização de curso de Inglês pelos membros do PET-CTC proficientes no idioma", "2026.EN.AL.5186", "Ana Paula Garcia", "01/03/2026 - 31/12/2028"],
+      ["PET-CTC DESENVOLVENDO HABILIDADES ESSENCIAIS: Formação em Engenharias", "2026.EN.AL.5163", "Ana Paula Garcia", "01/03/2026 - 31/12/2028"],
+      ["Trilhas Adaptativas com Inteligência Artificial para Aprendizagem em Disciplinas Teóricas de Computação", "2026.EN.AL.5901", "Paulo Silas Severo de Souza", "31/07/2026 - 31/12/2026"],
+      ["Trilhas Formativas por Microaprendizagem e Reconhecimento Progressivo de Competências", "2026.EN.AL.5913", "Silvio Ereno Quincozes", "15/10/2025 - 31/12/2029"],
+    ]},
+    { id: "inclusao", nome: "Inclusão e diversidade", small: true, lista: [
+      ["E-commerce para inclusão social das pessoas com deficiência", "2025.ID.AL.4942", "Fabio Paulo Basso", "01/10/2025 - 30/09/2027"],
+      ["Gurias na Computação", "2026.ID.AL.6181", "Aline Vieira de Mello", "10/09/2026 - 28/02/2028"],
+      ["Gurias Of Code em ação", "2026.ID.AL.6189", "Ildevana Poltronieri Rodrigues", "10/09/2026 - 11/09/2028"],
+      ["Jykre Kar: ampliando escutas interculturais", "2026.ID.AL.6198", "Maria Cristina Graeff Wernz", "01/10/2026 - 31/12/2027"],
+      ["Monitoria de Apoio à Inclusão e Acessibilidade - DEIA/PROCADI", "2026.ID.AL.6068", "Roberta dos Santos Messa", "01/08/2026 - 31/07/2028"],
+      ["Pequenos Pampinhas", "2026.ID.AL.5645", "Natalia Braun Chagas", "01/04/2026 - 31/12/2026"],
+      ["Tecendo Redes de Identidade, Ancestralidade e Interculturalidade: Diálogos Afro-Indígenas no Pampa", "2026.ID.AL.5606", "Daiana da Silva Marcelino", "01/04/2026 - 18/12/2027"],
+      ["TRAMAS Acessibilidade", "2025.ID.AL.4956", "Amanda Meincke Melo", "07/10/2025 - 31/12/2026"],
+    ]},
+    { id: "empreendedorismo", nome: "Empreendedorismo", small: true, lista: [
+      ["Campus Empreendedor - 4a. Edição", "2026.EP.AL.5720", "Mauro Fonseca Rodrigues", "01/05/2026 - 31/12/2026"],
+      ["Startup Igniter - Transformando o aluno empreendedor 2", "2026.EP.AL.5942", "Fabio Paulo Basso", "27/06/2026 - 30/04/2029"],
+      ["Validação de Modelo de Negócio de Impacto Social para Apoio à Autonomia do Cidadão em Requerimentos Administrativos no Âmbito do INSS", "2026.EP.AL.5938", "Maicon Bernardino da Silveira", "15/06/2026 - 31/12/2027"],
+    ]},
+    { id: "gestao", nome: "Gestão acadêmica", small: true, lista: [
+      ["Chamada Interna Prograd 01/2025", "2025.GA.AL.4550", "Paulo Silas Severo de Souza", "16/05/2025 - 31/12/2026"],
+      ["Chamada Interna Prograd 01/2025 - Coordenação Acadêmica Alegrete", "2025.GA.AL.4527", "Natalia Braun Chagas", "16/05/2025 - 31/12/2026"],
+      ["Modelo de Gestão Acadêmica Integrada: Proposta Experimental para Validação e Perenidade do PET-CTC e o Fortalecimento Sistêmico da UNIPAMPA", "2026.GA.AL.5190", "Ana Paula Garcia", "01/01/2026 - 31/12/2032"],
+    ]},
+    { id: "assuntos", nome: "Assuntos estudantis", small: true, lista: [
+      ["Correfólio – Promoção da Saúde e Bem-Estar de Estudantes da UNIPAMPA por Meio de Atividades Físicas", "2025.AS.AL.5150", "Silvio Ereno Quincozes", "18/11/2025 - 31/12/2026"],
+      ["Jykre kar: diálogos interculturais com a comunidade acadêmica", "2026.AS.AL.5452", "Maria Cristina Graeff Wernz", "01/04/2026 - 31/12/2026"],
+    ]},
   ];
 
-  // Largura x altura reais (px) das imagens das tabelas de projetos (evita deslocamento de layout)
-  const IMG_DIM = {
-    "pesquisa-1": [1313, 787], "pesquisa-2": [1173, 811], "pesquisa-3": [1170, 366],
-    "extensao-1": [1163, 383], "extensao-2": [1177, 742], "inovacao": [1167, 577],
-    "ensino-1": [1166, 157], "ensino-2": [1163, 632], "inclusao-1": [1167, 107], "inclusao-2": [1147, 217],
-    "empreendedorismo": [1167, 160], "gestao": [1171, 167], "assuntos-1": [1153, 92], "assuntos-2": [1182, 110],
-  };
+  // Horários de 2026/2 transcritos de img/horarios.png.
+  // A captura original mostra só o início da lista (o site de origem informava 47 resultados);
+  // as demais aulas não aparecem na imagem e não existem em nenhuma versão do repositório.
+  // Colunas: semestre ideal (null = sem período ideal), disciplina, código, professor(es), dia, horário, sala, tipo
+  const HORARIOS_TOTAL_ORIGEM = 47;
+  const HORARIOS = [
+    { sem: 2, disc: "Banco de Dados", cod: "AL0327", prof: "Maicon B. da Silveira", dia: "Ter", hora: "18:30-20:20", sala: "205 · Sala de aula", tipo: "aula" },
+    { sem: 2, disc: "Banco de Dados", cod: "AL0327", prof: "Maicon B. da Silveira", dia: "Ter", hora: "20:30-22:20", sala: "Sala não cadastrada", tipo: "aula" },
+    { sem: 2, disc: "Banco de Dados", cod: "AL0327", prof: "Maicon B. da Silveira", dia: "Qua", hora: "18:30-22:20", sala: "Sala não cadastrada", tipo: "aula" },
+    { sem: 2, disc: "Banco de Dados", cod: "AL0327", prof: "Maicon B. da Silveira", dia: "Qui", hora: "18:30-20:20", sala: "102 · Lab. Info. 5", tipo: "aula" },
+    { sem: 2, disc: "Computação e Sociedade", cod: "", prof: "Ildevana P. Rodrigues", dia: "Qui", hora: "20:30-22:25", sala: "102 · Lab. Info. 5", tipo: "aula" },
+  ];
 
   const SALAS = [
     ["102 - Laboratório de Informática 5", 40, "15.95m (largura) x 6.42m (profundidade)"],
@@ -238,9 +371,106 @@ function iniciar() {
     </div>`
   };
 
+  // Estado dos filtros da página de horários (mantido entre visitas, como os filtros de docentes)
+  const hf = { tipo: "aula", sem: "todos", dia: "todos", q: "" };
+  const HOR_SEMESTRES = [["todos", "Todos"], ["2", "2º"], ["4", "4º"], ["6", "6º"], ["8", "8º"], ["sem", "Sem período ideal"]];
+  const HOR_DIAS = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+  const semAcentoH = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const horPill = (grupo, valor, rotulo, atual) =>
+    `<button type="button" class="hor-pill${valor === atual ? " on" : ""}" data-hor="${grupo}" data-valor="${valor}" aria-pressed="${valor === atual}">${rotulo}</button>`;
+
   PAGES["horarios"] = { tab: "horarios", titulo: "Horários de 2026/2", html: () => `
-    <img class="shot" src="img/horarios.png" alt="Horários de 2026/2 – Engenharia de Software, com filtros por semestre, dia, disciplina e professor" width="1155" height="865">`
+    <div class="horarios">
+      <h2 class="page-title">Horários de 2026/2</h2>
+      <p class="hor-sub">Engenharia de Software, UNIPAMPA. Oferta do 2º semestre de 2026.</p>
+      <div class="hor-filtros">
+        <div class="hor-grupo" role="group" aria-labelledby="hor-l-mostrar">
+          <span id="hor-l-mostrar" class="hor-label">Mostrar</span>
+          <div class="hor-toggle">${horPill("tipo", "aula", "Aulas", hf.tipo)}${horPill("tipo", "atendimento", "Atendimento ao aluno", hf.tipo)}</div>
+        </div>
+        <div class="hor-grupo" role="group" aria-labelledby="hor-l-sem">
+          <span id="hor-l-sem" class="hor-label">Semestre</span>
+          <div class="hor-pills">${HOR_SEMESTRES.map(([v, r]) => horPill("sem", v, r, hf.sem)).join("")}</div>
+        </div>
+        <div class="hor-grupo" role="group" aria-labelledby="hor-l-dia">
+          <span id="hor-l-dia" class="hor-label">Dia</span>
+          <div class="hor-pills">${horPill("dia", "todos", "Todos", hf.dia)}${HOR_DIAS.map((d) => horPill("dia", d, d, hf.dia)).join("")}</div>
+        </div>
+        <div class="hor-grupo">
+          <label for="hor-busca" class="hor-label">Buscar disciplina ou professor</label>
+          <input id="hor-busca" type="search" placeholder="Ex.: Banco de Dados, Schepke" value="${esc(hf.q)}">
+        </div>
+      </div>
+      <p class="hor-aviso" role="note"><b>Dados parciais:</b> a captura de origem (<code>img/horarios.png</code>) exibia ${HORARIOS_TOTAL_ORIGEM} resultados, mas só as primeiras ${HORARIOS.length} linhas estavam visíveis. As demais aulas e os horários de atendimento ao aluno precisam ser completados a partir da oferta oficial (GURI).</p>
+      <p id="hor-contagem" class="hor-contagem" aria-live="polite"></p>
+      <div class="table-scroll">
+        <table class="hor-tabela">
+          <caption class="sr-only">Horários de 2026/2: disciplina, professor(es), dia, horário e sala</caption>
+          <thead><tr><th scope="col">Disciplina</th><th scope="col">Professor(es)</th><th scope="col">Dia</th><th scope="col">Horário</th><th scope="col">Sala</th></tr></thead>
+          <tbody id="hor-body"></tbody>
+        </table>
+      </div>
+    </div>`,
+    after: () => {
+      const pag = $(".horarios");
+      pag.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-hor]");
+        if (!b) return;
+        hf[b.dataset.hor] = b.dataset.valor;
+        b.parentElement.querySelectorAll("[data-hor]").forEach((x) => {
+          x.classList.toggle("on", x === b);
+          x.setAttribute("aria-pressed", String(x === b));
+        });
+        renderHorarios();
+      });
+      $("#hor-busca").addEventListener("input", (e) => { hf.q = e.target.value; renderHorarios(); });
+      renderHorarios();
+    },
+    // a tabela é preenchida depois (renderHorarios), então a busca do site recebe os dados à parte
+    busca: () => HORARIOS.map((h) => [h.disc, h.cod, h.prof, h.dia, h.hora, h.sala].join(" ")).join(" "),
   };
+
+  function renderHorarios() {
+    const body = $("#hor-body");
+    if (!body) return;
+    const q = semAcentoH(hf.q.trim());
+    const lista = HORARIOS.filter((h) =>
+      h.tipo === hf.tipo &&
+      (hf.sem === "todos" || (hf.sem === "sem" ? h.sem === null : String(h.sem) === hf.sem)) &&
+      (hf.dia === "todos" || h.dia === hf.dia) &&
+      (!q || semAcentoH(`${h.disc} ${h.cod} ${h.prof}`).includes(q)));
+    $("#hor-contagem").textContent = `${lista.length} resultado${lista.length === 1 ? "" : "s"}`;
+    if (!lista.length) {
+      body.innerHTML = `<tr class="empty-row"><td colspan="5">Nenhum horário encontrado com esses filtros${hf.tipo === "atendimento" ? " (os horários de atendimento não constavam na captura de origem)" : ""}.</td></tr>`;
+      return;
+    }
+    // Agrupa por semestre ideal e só repete nome/professor quando muda a disciplina (como na tela original)
+    const grupos = new Map();
+    lista.forEach((h) => {
+      const k = h.sem === null ? "sem" : h.sem;
+      if (!grupos.has(k)) grupos.set(k, []);
+      grupos.get(k).push(h);
+    });
+    let html = "";
+    [...grupos.keys()].sort((a, b) => (a === "sem") - (b === "sem") || a - b).forEach((k) => {
+      const itens = grupos.get(k);
+      const nome = k === "sem" ? "Sem período ideal" : `${k}º semestre`;
+      html += `<tr class="hor-grupo-linha"><th colspan="5" scope="rowgroup">${nome} <span>${itens.length} horário${itens.length === 1 ? "" : "s"}</span></th></tr>`;
+      let anterior = null;
+      itens.forEach((h) => {
+        const nova = !anterior || anterior.disc !== h.disc;
+        html += `<tr>
+          <td>${nova ? `<b>${esc(h.disc)}</b>` : `<span class="sr-only">${esc(h.disc)}</span>`}${h.cod ? `<small>${esc(h.cod)}</small>` : ""}</td>
+          <td>${nova ? esc(h.prof) : ""}</td>
+          <td>${esc(h.dia)}</td>
+          <td class="nowrap mono">${esc(h.hora)}</td>
+          <td>${esc(h.sala)}</td>
+        </tr>`;
+        anterior = h;
+      });
+    });
+    body.innerHTML = html;
+  }
 
   let filtroNome = "Todos", filtroSobrenome = "Todos";
   PAGES["docentes"] = { tab: "docentes", titulo: "Docentes do campus Alegrete", html: () => {
@@ -293,8 +523,15 @@ function iniciar() {
     PAGES["projetos-" + p.id] = { tab: "projetos", titulo: `Projetos de ${p.nome}`, html: () => `
       ${back("projetos", "Projetos")}
       <h2 class="page-title light">${p.nome}</h2>
-      <div class="shot-group">
-        ${p.imgs.map((img) => `<img class="shot" src="img/${img}.png" alt="Tabela de projetos de ${p.nome}: projeto, registro, coordenador e período" width="${IMG_DIM[img][0]}" height="${IMG_DIM[img][1]}" loading="lazy">`).join("")}
+      <p class="proj-total">${p.lista.length} projeto${p.lista.length === 1 ? "" : "s"}</p>
+      <div class="table-scroll">
+        <table class="projetos-tabela">
+          <caption class="sr-only">Projetos de ${p.nome}: projeto, registro, coordenador e período</caption>
+          <thead><tr><th scope="col">Projeto</th><th scope="col">Registro</th><th scope="col">Coordenador</th><th scope="col">Período</th></tr></thead>
+          <tbody>
+            ${p.lista.map(([nome, reg, coord, per]) => `<tr><td>${esc(nome)}</td><td class="nowrap">${esc(reg)}</td><td>${esc(coord)}</td><td class="nowrap">${esc(per)}</td></tr>`).join("")}
+          </tbody>
+        </table>
       </div>`
     };
   });
