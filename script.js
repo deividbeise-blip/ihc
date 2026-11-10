@@ -288,11 +288,33 @@ function iniciar() {
   const $ = (s, el = document) => el.querySelector(s);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const back = (hash, label) => `<a class="back-link" href="#${hash}">← Voltar para ${label}</a>`;
+  const slug = (s) => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  // Documentos: cada arquivo abre uma página interna com a pré-visualização
+  const DOCS = {};
+  let docOrigem = null;
+  function docPapel(rotulo, tipo) {
+    return `
+      <div class="doc-head"><span class="doc-tipo">${tipo}</span><span>${rotulo}</span></div>
+      <div class="doc-papel" aria-hidden="true">
+        <div class="doc-logo"></div>
+        <span style="width:60%"></span><span style="width:40%"></span><br>
+        <span></span><span></span><span style="width:85%"></span><span></span><span style="width:70%"></span><br>
+        <span></span><span style="width:90%"></span><span></span><span style="width:55%"></span>
+      </div>`;
+  }
+  function docA(rotulo, tipo) {
+    const id = "documento-" + slug(rotulo).slice(0, 70);
+    if (!DOCS[id]) DOCS[id] = { rotulo, tipo: tipo || "PDF", origem: docOrigem };
+    return `<a href="#${id}"${tipo ? ` data-tipo="${tipo}"` : ""}>${rotulo}</a>`;
+  }
+  const doc = (rotulo, _pageId, tipo) => `<li>${docA(rotulo, tipo)}</li>`;
+
 
   // ---------------- Menu do SisBi (barra verde da aba Bibliotecas) ----------------
-  // Itens e links conforme o menu de https://sites.unipampa.edu.br/sisbi/
-  // url    = abre no site oficial (nova aba)
-  // interno = página deste protótipo (#hash)
+  // Itens conforme o menu do site do SisBi.
+  // url     = item com página própria no protótipo (#sisbi-item-...); o endereço original fica só como referência
+  // interno = página já existente no protótipo (#hash)
   const SB = "https://sites.unipampa.edu.br/sisbi/";
   const SISBI_MENU = [
     { id: "consulta", nome: "Consulta ao acervo | Renovações e Reservas", desc: "Consulte o acervo das bibliotecas, faça reservas e renove seus empréstimos no Pergamum.", itens: [
@@ -378,11 +400,10 @@ function iniciar() {
     ]},
   ];
 
-  // Link de um item: interno (#hash) ou externo (nova aba, com ↗)
-  const sbHref = (it) => it.interno
-    ? `href="#${it.interno}"`
-    : `href="${it.url}" target="_blank" rel="noopener" title="Abre no site oficial do SisBi (nova aba)"`;
-  const sbSeta = (it) => (it.interno ? "" : ' <span class="sb-ext" aria-hidden="true">↗</span>');
+  // Todo item abre uma página interna do protótipo
+  const sbPagina = (it) => it.interno || "sisbi-item-" + slug(it.n).slice(0, 60);
+  const sbHref = (it) => `href="#${sbPagina(it)}"`;
+  const sbSeta = () => "";
 
   function sbItensMenu(itens, nivel) {
     return itens.map((it) => {
@@ -430,7 +451,7 @@ function iniciar() {
     <h2 class="page-title">Página PPC</h2>
     <div class="ppc-block">
       <span class="tag-green">PPC vigente</span>
-      <p>Acesse o PPC Engenharia de Software vigente aqui: <a href="#" class="noop">PPC Engenharia Software .pdf (3.57 MB)</a></p>
+      <p>Acesse o PPC Engenharia de Software vigente aqui: ${docA("PPC Engenharia Software .pdf (3.57 MB)")}</p>
     </div>
     <div class="ppc-block">
       <span class="tag-green">PPC Anteriores</span>
@@ -447,21 +468,21 @@ function iniciar() {
       <div class="box">
         <h3>Files</h3>
         <ul>
-          <li><a href="#" class="noop">PPC-Engenharia de Software_Alegrete.pdf (1.51 MB)</a></li>
-          <li><a href="#" class="noop">PPC-ES-2015.pdf (1.87 MB)</a></li>
-          <li><a href="#" class="noop">PPC Engenharia de Software_Alegrete.pdf (1.62 MB)</a></li>
-          <li><a href="#" class="noop">PPC_Engenharia de Software_Alegrete.pdf (2.03 MB)</a></li>
-          <li><a href="#" class="noop">PPC Engenharia de Software_Alegrete.pdf (1.55 MB)</a></li>
-          <li><a href="#" class="noop">PPC Engenharia de Software_Alegrete (2.5 MB)</a></li>
-          <li><a href="#" class="noop">PPC Engenharia de Software_Alegrete (3.5 MB)</a></li>
-          <li><a href="#" class="noop">PPC.Engenharia de Software_Alegretepdf (3.47 MB)</a></li>
+          <li>${docA("PPC-Engenharia de Software_Alegrete.pdf (1.51 MB)")}</li>
+          <li>${docA("PPC-ES-2015.pdf (1.87 MB)")}</li>
+          <li>${docA("PPC Engenharia de Software_Alegrete.pdf (1.62 MB)")}</li>
+          <li>${docA("PPC_Engenharia de Software_Alegrete.pdf (2.03 MB)")}</li>
+          <li>${docA("PPC Engenharia de Software_Alegrete.pdf (1.55 MB)")}</li>
+          <li>${docA("PPC Engenharia de Software_Alegrete (2.5 MB)")}</li>
+          <li>${docA("PPC Engenharia de Software_Alegrete (3.5 MB)")}</li>
+          <li>${docA("PPC.Engenharia de Software_Alegretepdf (3.47 MB)")}</li>
         </ul>
       </div>
       <dl class="box citation">
         <dt style="margin-top:0">Citation</dt>
         <dd>UNIVERSIDADE FEDERAL DO PAMPA, PPC Alegrete - Engenharia de Software, Unipampa - Campus Alegrete,130p., 2012.</dd>
         <dt>URI</dt>
-        <dd class="blue"><a href="https://repositorio.unipampa.edu.br/handle/riu/100" target="_blank" rel="noopener">https://repositorio.unipampa.edu.br/handle/riu/100</a></dd>
+        <dd class="blue">https://repositorio.unipampa.edu.br/handle/riu/100</dd>
         <dt>Collections</dt>
         <dd class="blue">PPCs</dd>
         <dt>Tipo de documento</dt>
@@ -611,9 +632,27 @@ function iniciar() {
       return okNome && okSob;
     });
     body.innerHTML = lista.length
-      ? lista.map(([n, e, l]) => `<tr><td>${esc(n)}</td><td>${esc(e)}</td><td><a href="${esc(l)}" target="_blank" rel="noopener">${esc(l)}</a></td></tr>`).join("")
+      ? lista.map(([n, e, l]) => `<tr><td><a href="#docente-${slug(n)}">${esc(n)}</a></td><td>${esc(e)}</td><td><a href="#docente-${slug(n)}">${esc(l)}</a></td></tr>`).join("")
       : `<tr class="empty-row"><td colspan="3">Nenhum docente encontrado com esse filtro.</td></tr>`;
   }
+
+  // Perfil de cada docente (dentro do protótipo)
+  DOCENTES.forEach(([n, e, l]) => {
+    PAGES["docente-" + slug(n)] = { tab: "docentes", pai: "docentes", lateral: "docentes", titulo: n, html: () => `
+      ${back("docentes", "Docentes")}
+      <h2 class="page-title light">${esc(n)}</h2>
+      <div class="texto">
+        <table class="tabela-simples">
+          <tbody>
+            <tr><th>E-mail institucional</th><td>${esc(e)}</td></tr>
+            <tr><th>Currículo Lattes</th><td>${esc(l)}</td></tr>
+            <tr><th>Campus</th><td>Alegrete</td></tr>
+          </tbody>
+        </table>
+        <p>Para falar com a coordenação do curso, use a página de <a href="#contato">Contato</a>.</p>
+      </div>`
+    };
+  });
 
   PAGES["projetos"] = { tab: "projetos", titulo: "Projetos", html: () => `
     <h2 class="page-title light">Projetos</h2>
@@ -760,7 +799,7 @@ function iniciar() {
           <li><a href="#" class="noop">Campanha do Agasalho 2026</a></li>
           <li><a href="#" class="noop">Cinemateca Móvel SisBi chega ao Pint of Science Itaqui!</a></li>
         </ul>
-        <p class="posts" style="margin-top:14px"><a href="https://sites.unipampa.edu.br/sisbi/bibliotecas/" target="_blank" rel="noopener">Abrir o site oficial do SisBi ↗</a></p>
+        <p class="posts" style="margin-top:14px"><a href="#sisbi-sisbi">Conheça o Sistema de Bibliotecas (SisBi)</a></p>
       </div>
       <img src="img/sisbi-logos-2.png" alt="Publica-se, Portal SBE, Bases de Livre Acesso e a revista do SisBi" width="336" height="803">
     </div>`
@@ -794,18 +833,143 @@ function iniciar() {
         ${back("bibliotecas", "Bibliotecas")}
         <h2 class="page-title light">${s.nome}</h2>
         ${s.desc ? `<p class="sb-intro">${s.desc}</p>` : ""}
-        ${corpo}
-        <p class="sb-nota"><span aria-hidden="true">↗</span> abre no site oficial em uma nova aba.${s.oficial ? ` <a href="${s.oficial}" target="_blank" rel="noopener">Ver esta página no site oficial do SisBi ↗</a>` : ""}</p>`;
+        ${corpo}`;
     }};
+  });
+
+
+  // ---------------- Páginas internas de cada item do SisBi ----------------
+  // Tudo fica dentro do protótipo: cada item do menu do SisBi abre uma página própria.
+
+  const SB_DESC = {
+    "Consulta ao acervo e Reservas": "Pesquise livros, periódicos e outros materiais das bibliotecas da Unipampa e reserve um exemplar que esteja emprestado.",
+    "Renovações": "Renove os materiais que estão emprestados com você, sem precisar ir até a biblioteca, desde que não haja reserva nem atraso.",
+    "Repositório Institucional": "Reúne a produção acadêmica da Unipampa, como TCCs, dissertações, artigos e documentos institucionais, com acesso aberto.",
+    "Publica-se": "Portal de periódicos da Unipampa, onde ficam as revistas científicas editadas pela universidade.",
+    "Periódicos Capes": "Acesso ao Portal de Periódicos da CAPES, com artigos científicos, bases de dados e e-books para a comunidade acadêmica.",
+    "Portal Saúde Baseada em Evidências": "Bases de dados e ferramentas da área da saúde para apoiar decisões baseadas em evidências científicas.",
+    "UpToDate – Informações de saúde": "Base de informações clínicas atualizadas, voltada aos cursos da área da saúde.",
+    "E-books Springer": "Coleção de livros eletrônicos da editora Springer disponíveis para a comunidade da Unipampa.",
+    "E-books Minha Biblioteca": "Plataforma de livros eletrônicos técnicos e acadêmicos em português, acessível com o login institucional.",
+    "Target GEDWeb": "Acesso a normas técnicas (como as da ABNT) para consulta pela comunidade acadêmica.",
+    "Bases de Dados e Ebooks de Livre Acesso": "Lista de bases de dados e livros eletrônicos gratuitos, que podem ser usados sem login.",
+    "Tesauros": "Vocabulários controlados que ajudam a escolher os termos certos para pesquisar e indexar assuntos.",
+    "Gerenciadores de referências": "Ferramentas que organizam suas referências bibliográficas e geram citações no formato ABNT.",
+    "Identificadores de autores": "Identificadores como ORCID e Lattes, que ligam o pesquisador à sua produção científica.",
+    "Agenda: Ações culturais e educativas": "Calendário das ações culturais e educativas promovidas pelas bibliotecas.",
+    "Biblio E-Zine": "Revista digital do SisBi, com notícias, dicas de leitura e conteúdos sobre as bibliotecas.",
+    "Edição Histórica – inaugural": "Primeira edição da revista Biblio E-Zine.",
+    "Clube do Livro da Unipampa": "Encontros de leitura e conversa sobre livros, abertos à comunidade acadêmica.",
+    "Clube do Livro Unipampa 2026": "Programação e livros escolhidos para o Clube do Livro em 2026.",
+    "Rodas de Leitura Contos": "Encontros do Clube do Livro dedicados à leitura de contos.",
+    "Clube do Livro da Unipampa 2025": "Programação e livros do Clube do Livro em 2025.",
+    "Conheça os Mediadores de 2025": "Apresentação das pessoas que conduziram os encontros do Clube do Livro em 2025.",
+    "Clube do Livro da Unipampa 2024": "Programação e livros do Clube do Livro em 2024.",
+    "Biblioteca de Cria-ções": "Projeto que transforma a biblioteca em espaço de criação, com oficinas e atividades culturais.",
+    "Sobre o Projeto": "Objetivos e funcionamento do projeto Biblioteca de Cria-ações.",
+    "Agenda – Biblioteca de Cria-ações": "Datas das oficinas e atividades da Biblioteca de Cria-ações.",
+    "Banco de talentos": "Cadastro para quem quer participar das atividades da Biblioteca de Cria-ações compartilhando um talento.",
+    "Área do bibliotecário": "Materiais de apoio para os bibliotecários que organizam as atividades do projeto.",
+    "Ludoteca Itinerante": "Acervo de jogos que circula entre os campi para uso em atividades de lazer e aprendizagem.",
+    "Jogos da Ludoteca Itinerante": "Lista dos jogos disponíveis na Ludoteca Itinerante.",
+    "Retirar Jogos": "Como pegar jogos emprestados da Ludoteca Itinerante.",
+    "Cinemateca Móvel SisBi": "Projeto de sessões de cinema seguidas de conversa, realizadas nos campi.",
+    "Sessões do Cinemateca": "Programação das sessões da Cinemateca Móvel.",
+    "Projeto EXPEDIÇÃO 360°": "Projeto do SisBi com visitas e atividades de exploração dos espaços das bibliotecas.",
+    "Guia Visual de Trabalhos Acadêmicos": "Guia ilustrado para formatar trabalhos acadêmicos conforme as normas.",
+    "Guia do Usuário": "Manual com as regras e os serviços das bibliotecas para quem usa o SisBi.",
+    "Serviços oferecidos": "Lista dos serviços das bibliotecas, como empréstimo, renovação, reserva, orientação e ficha catalográfica.",
+    "Instruções para Normalização de Trabalhos Acadêmicos": "Orientações para aplicar as normas da ABNT em TCCs, relatórios e artigos.",
+    "Empréstimo Entre Bibliotecas": "Permite pedir um material de outro campus para retirar na biblioteca do seu campus.",
+    "Manuais Configuração de Proxy": "Passo a passo para acessar as bases de dados assinadas fora da rede da universidade.",
+    "ISBN / ISSN": "Orientações para solicitar ISBN (livros) e ISSN (periódicos) para publicações da Unipampa.",
+    "WIKIPAMPA": "Projeto de criação e melhoria de verbetes na Wikipédia com a comunidade acadêmica.",
+    "Normas de circulação do acervo": "Regras de empréstimo, prazos, renovação, reserva e multas das bibliotecas.",
+    "Regimento geral": "Documento que define a organização e o funcionamento do Sistema de Bibliotecas.",
+    "Planos de contingência": "Procedimentos das bibliotecas para situações de emergência ou interrupção dos serviços.",
+    "Política de Desenvolvimento de Coleções – PDC": "Critérios para compra, doação, avaliação e descarte de materiais do acervo.",
+    "Doação de Livros": "Como doar livros para as bibliotecas e quais materiais são aceitos.",
+    "Programa de regularização de multas nas Bibliotecas da UNIPAMPA": "Condições para quitar ou regularizar multas por atraso na devolução.",
+    "Perguntas frequentes": "Respostas para as dúvidas mais comuns sobre o uso das bibliotecas.",
+    "SisBi": "Apresentação do Sistema de Bibliotecas da Unipampa, sua missão e sua estrutura.",
+    "Sistema de bibliotecas": "Como as bibliotecas dos dez campi trabalham juntas no SisBi.",
+    "Coleções e Serviços Acessíveis": "Materiais e serviços acessíveis, como livros em formatos alternativos e apoio a pessoas com deficiência.",
+  };
+
+  // Percorre o menu e cria uma página por item (inclusive subitens e editais)
+  const SB_ITENS = [];
+  function sbRegistrar(itens, secao, grupo) {
+    itens.forEach((it) => {
+      if (it.url) {
+        it.pagina = sbPagina(it);
+        SB_ITENS.push({ it, secao, grupo });
+      }
+      if (it.sub) sbRegistrar(it.sub, secao, it);
+    });
+  }
+  SISBI_MENU.forEach((s) => {
+    if (s.itens) sbRegistrar(s.itens, s, null);
+    if (s.anos) s.anos.forEach((a) => a.itens.forEach((it) => {
+      it.pagina = sbPagina(it);
+      it.ano = a.ano;
+      SB_ITENS.push({ it, secao: s, grupo: null });
+    }));
+  });
+
+  function sbConteudoEspecial(it) {
+    if (it.n === "Consulta ao acervo e Reservas") return `
+      <form class="sb-form" id="form-acervo" novalidate>
+        <label for="acervo-termo">Buscar no acervo</label>
+        <div class="sb-form-linha">
+          <input id="acervo-termo" type="text" placeholder="Título, autor ou assunto">
+          <select id="acervo-campus" aria-label="Biblioteca">
+            <option>Todas as bibliotecas</option>
+            ${BIBLIOTECAS.map((b) => `<option>${b.nome}</option>`).join("")}
+          </select>
+          <button type="submit" class="btn-buscar-acervo">Buscar</button>
+        </div>
+        <p class="form-status" id="acervo-status" role="status"></p>
+      </form>`;
+    if (it.n === "Renovações") return `
+      <ol class="sb-passos">
+        <li>Entre na consulta ao acervo com sua matrícula.</li>
+        <li>Abra <b>Meus empréstimos</b> e marque os materiais.</li>
+        <li>Clique em <b>Renovar</b>. Não é possível renovar material reservado ou em atraso.</li>
+      </ol>
+      <p><a href="#sisbi-item-consulta-ao-acervo-e-reservas">Ir para a consulta ao acervo</a></p>`;
+    return "";
+  }
+
+  SB_ITENS.forEach(({ it, secao, grupo }) => {
+    const desc = it.ano
+      ? `Edital publicado pelo Sistema de Bibliotecas em ${it.ano}.`
+      : SB_DESC[it.n] || "Informações sobre este serviço do Sistema de Bibliotecas.";
+    PAGES[it.pagina] = { tab: "bibliotecas", pai: "sisbi-" + secao.id, lateral: null, titulo: it.n.length > 70 ? it.n.slice(0, 67) + "…" : it.n, html: () => `
+      ${SISBI_BAR}
+      ${back("sisbi-" + secao.id, secao.nome)}
+      ${grupo ? `<p class="sb-grupo-trilha">${secao.nome} › ${grupo.pagina ? `<a href="#${grupo.pagina}">${grupo.n}</a>` : grupo.n}</p>` : ""}
+      <h2 class="page-title light">${it.n}</h2>
+      <p class="sb-intro">${desc}</p>
+      ${sbConteudoEspecial(it)}
+      ${it.sub ? `<div class="sb-btns">${it.sub.map(sbBotao).join("")}</div>` : ""}
+      ${it.ano ? `<div class="doc-view">${docPapel(it.n, "EDITAL")}</div>` : ""}`,
+      after: it.n === "Consulta ao acervo e Reservas" ? () => {
+        $("#form-acervo").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const termo = $("#acervo-termo").value.trim();
+          const st = $("#acervo-status");
+          st.className = "form-status " + (termo ? "ok" : "err");
+          st.textContent = termo
+            ? `Busca por “${termo}” em ${$("#acervo-campus").value} registrada (protótipo: o acervo não está carregado).`
+            : "Digite um título, autor ou assunto para buscar.";
+        });
+      } : null,
+    };
   });
 
   // =====================================================
   // Páginas trazidas do site oficial (v2)
   // =====================================================
-  const OFICIAL = "https://cursos.unipampa.edu.br/cursos/engenhariadesoftware/";
-  // Documentos: o protótipo aponta para a página oficial onde o arquivo está publicado
-  const doc = (rotulo, pageId, tipo) =>
-    `<li><a href="${OFICIAL}?page_id=${pageId}" target="_blank" rel="noopener"${tipo ? ` data-tipo="${tipo}"` : ""}>${rotulo}</a></li>`;
 
   const NOTICIAS = [
     { id: "eres-2025", data: "5 de novembro de 2025", cats: ["Eventos"],
@@ -873,9 +1037,7 @@ function iniciar() {
       <div class="posts-lista">${lista.map(cardNoticia).join("") || "<p>Nenhuma notícia nesta categoria.</p>"}</div>
       <nav class="paginacao" aria-label="Navegação por posts">
         <span class="atual">1</span>
-        <a href="${OFICIAL}?paged=2" target="_blank" rel="noopener">2</a> …
-        <a href="${OFICIAL}?paged=36" target="_blank" rel="noopener">36</a>
-        <a href="${OFICIAL}?paged=2" target="_blank" rel="noopener">Próximo →</a>
+        <span>Página 1 de 1</span>
       </nav>`;
   }
 
@@ -905,7 +1067,7 @@ function iniciar() {
       <h2 class="page-title light">${n.titulo}</h2>
       <div class="post-meta"><span>Publicado em ${n.data}</span>${n.cats.map((c) => `<button type="button" class="cat" data-cat="${c}">${c}</button>`).join("")}</div>
       <div class="post-corpo">${n.corpo.map((p) => `<p>${p}</p>`).join("")}
-        <p class="nota">Texto resumido para o protótipo. <a href="${OFICIAL}" target="_blank" rel="noopener">Ver no site oficial</a>.</p>
+        <p class="nota">Texto resumido para o protótipo.</p>
       </div>
       <nav class="post-nav" aria-label="Navegação entre notícias">
         ${ant ? `<a href="#noticia-${ant.id}">← ${ant.titulo}</a>` : "<span></span>"}
@@ -922,7 +1084,8 @@ function iniciar() {
     <p>Formar profissionais capazes de aplicar a prática da Engenharia de Software no desenvolvimento, na gestão e na evolução de sistemas de software.</p>
     <h3>Campos de atuação</h3>
     <ul><li>Desenvolvedor(a) de software</li><li>Gerente de projetos de software</li><li>Consultor(a)</li><li>Pesquisador(a)</li><li>Empreendedor(a)</li></ul>
-    <p class="nota">O vídeo de apresentação do curso está disponível na <a href="${OFICIAL}?page_id=2036" target="_blank" rel="noopener">página oficial</a>.</p>`;
+    <h3>Vídeo de apresentação</h3>
+    <div class="video-ph" role="img" aria-label="Espaço para o vídeo de apresentação do curso"><span>▶</span>Vídeo de apresentação do curso</div>`;
 
   PAGES["o-curso"] = { tab: null, titulo: "O Curso", html: () => `
     <h2 class="page-title light">O Curso</h2>
@@ -1120,7 +1283,7 @@ function iniciar() {
     <div class="texto">
       <p>O representante discente leva a voz dos estudantes à Comissão de Curso, que também tem professores e técnicos (TAEs). Por meio dele, os alunos podem pedir, por exemplo, a inclusão de novos componentes complementares (CCCGs).</p>
       <ul class="pessoas"><li>Camilla Charão Borchhardt Quincozes<small>Representante discente atual</small></li></ul>
-      <p class="nota">O contato da representante está publicado na <a href="${OFICIAL}?page_id=2106" target="_blank" rel="noopener">página oficial</a>.</p>
+      <p>Para falar com a representação discente, use a página de <a href="#contato">Contato</a>.</p>
     </div>`
   };
   const GRUPOS = [
@@ -1408,6 +1571,7 @@ function iniciar() {
   function textoDaPagina(id) {
     const tmp = document.createElement("div");
     tmp.innerHTML = PAGES[id].html();
+    tmp.querySelectorAll(".sisbi-bar").forEach((el) => el.remove()); // o menu do SisBi se repete em várias páginas
     const extra = PAGES[id].busca ? " " + PAGES[id].busca() : "";
     return (PAGES[id].titulo + " " + tmp.textContent + extra).toLowerCase();
   }
@@ -1560,6 +1724,22 @@ function iniciar() {
     const dentro = focaveis.includes(document.activeElement);
     if (e.shiftKey && (document.activeElement === primeiro || !dentro)) { e.preventDefault(); ultimo.focus(); }
     else if (!e.shiftKey && (document.activeElement === ultimo || !dentro)) { e.preventDefault(); primeiro.focus(); }
+  });
+
+  // Registra os documentos citados nas páginas e cria uma página para cada um
+  Object.keys(PAGES).forEach((id) => {
+    docOrigem = id;
+    try { PAGES[id].html(); } catch (e) { /* páginas que dependem do DOM são ignoradas aqui */ }
+  });
+  docOrigem = null;
+  Object.entries(DOCS).forEach(([id, d]) => {
+    const origem = d.origem && PAGES[d.origem] ? d.origem : null;
+    PAGES[id] = { tab: origem ? PAGES[origem].tab : null, pai: origem, lateral: origem, titulo: d.rotulo, html: () => `
+      ${origem ? back(origem, PAGES[origem].titulo) : ""}
+      <h2 class="page-title light">${d.rotulo}</h2>
+      <div class="doc-view">${docPapel(d.rotulo, d.tipo)}</div>
+      <p class="nota">Pré-visualização ilustrativa: o arquivo original não faz parte do protótipo.</p>`
+    };
   });
 
   render();

@@ -563,3 +563,36 @@ body.contraste .sb-intro, body.contraste .sb-nota { color: #fff; }
   .sb-item:hover .sb-dd { display: none; }
   .sb-item.open .sb-dd { display: block; position: static; width: 100%; margin: 0 0 6px; max-height: none; box-shadow: none; }
 }
+/* =====================================================
+   Páginas internas (itens do SisBi, documentos, docentes)
+   ===================================================== */
+.sb-grupo-trilha { font-family: var(--fonte-site); font-size: 11px; color: #666; margin: 0 0 4px; }
+.sb-grupo-trilha a { color: var(--verde-escuro); }
+.sb-form { font-family: var(--fonte-site); font-size: 12px; margin: 4px 0 18px; max-width: 620px; }
+.sb-form label { display: block; font-weight: 700; margin-bottom: 6px; }
+.sb-form-linha { display: flex; gap: 8px; flex-wrap: wrap; }
+.sb-form-linha input { flex: 1 1 220px; min-width: 0; padding: 8px 10px; border: 1px solid #bbb; font-size: 12px; }
+.sb-form-linha select { padding: 7px 8px; border: 1px solid #bbb; font-size: 12px; }
+.btn-buscar-acervo { background: var(--verde); color: #fff; border: 0; padding: 8px 18px; font-size: 12px; font-weight: 700; }
+.btn-buscar-acervo:hover { background: var(--verde-escuro); }
+.sb-passos { font-family: var(--fonte-site); font-size: 12.5px; line-height: 1.6; padding-left: 20px; }
+
+.doc-view { max-width: 560px; border: 1px solid #ccc; background: #f4f4f4; padding: 12px; margin: 6px 0 12px; }
+.doc-head { display: flex; gap: 8px; align-items: center; font-family: var(--fonte-site); font-size: 12px; font-weight: 700; margin-bottom: 10px; }
+.doc-tipo { background: var(--verde-tabela); color: #fff; font-size: 9px; padding: 3px 6px; border-radius: 2px; flex: 0 0 auto; }
+.doc-papel { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.12); padding: 26px 30px; aspect-ratio: 210 / 297; max-height: 420px; max-width: 100%; margin: 0 auto; }
+.doc-papel span { display: block; height: 7px; background: #e1e1e1; border-radius: 3px; margin: 9px 0; width: 100%; }
+.doc-logo { width: 44px; height: 44px; border-radius: 50%; background: #d7eadc; margin-bottom: 14px; }
+
+.video-ph {
+  max-width: 480px; aspect-ratio: 16 / 9; background: #1d2b22; color: #cfe3d5; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px; font-family: var(--fonte-site); font-size: 12px; border-radius: 4px;
+}
+.video-ph span { width: 54px; height: 54px; border-radius: 50%; background: var(--verde); color: #fff; display: grid; place-items: center; font-size: 22px; }
+
+.docentes td a { color: inherit; text-decoration: none; }
+.docentes td a:hover { text-decoration: underline; }
+.docentes td:last-child a { color: #1d6fa5; }
+.texto .tabela-simples th { width: 34%; }
+
+body.contraste .doc-view, body.contraste .doc-papel { background: #000; border-color: #fff; }
