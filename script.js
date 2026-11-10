@@ -1628,6 +1628,7 @@ function iniciar() {
     btnBusca.setAttribute("aria-label", "Pesquisar");
     btnBusca.title = "Pesquisar";
     results.innerHTML = "";
+    $("#search-count").hidden = true;
     body.classList.remove("has-results");
     hint.textContent = HINT_AVANCADA;
     hint.hidden = !advanced.checked;
@@ -1649,6 +1650,7 @@ function iniciar() {
     const paiId = p.pai || (p.tab && p.tab !== id ? p.tab : null);
     return paiId && PAGES[paiId] ? "Dentro de " + PAGES[paiId].titulo : "Página principal";
   }
+  const contador = $("#search-count");
   function buscar() {
     const termo = semAcento(input.value.trim());
     const usarFiltros = advanced.checked && filtros.size > 0;
@@ -1656,6 +1658,7 @@ function iniciar() {
       hint.hidden = false;
       hint.textContent = advanced.checked ? HINT_AVANCADA : "Digite o que você procura no campo acima.";
       results.innerHTML = "";
+      contador.hidden = true;
       body.classList.remove("has-results");
       return;
     }
@@ -1670,6 +1673,9 @@ function iniciar() {
     const para = input.value.trim() ? ` para “${esc(input.value.trim())}”` : "";
     hint.hidden = true;
     body.classList.add("has-results");
+    contador.hidden = !achados.length;
+    contador.textContent = `${achados.length} ${achados.length === 1 ? "resultado encontrado" : "resultados encontrados"}${input.value.trim() ? ` para “${input.value.trim()}”` : ""}${emCategorias}`;
+    body.scrollTop = 0;
     results.innerHTML = achados.length
       ? achados.map((id) => `<li><a href="#${id}" data-close>${PAGES[id].titulo}</a><small>${onde(id)}</small></li>`).join("")
       : `<li class="none">Nenhum resultado${para}${esc(emCategorias)}. ${usarFiltros ? "Tente remover algum filtro ou usar outra palavra." : "Tente outra palavra, como “biblioteca”, “laboratório” ou o nome de um docente."}</li>`;
